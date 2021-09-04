@@ -1,6 +1,7 @@
 logo_title: 星辉的博客
 
-style: white
+#style: white
+style: black
 
 favicon: /favicon.ico
 
