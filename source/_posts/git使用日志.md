@@ -7,15 +7,18 @@ date: 2021-05-21 15:38:06
 ### git使用记录
 
 #### 一般流程
+
 ```bash
 git clone git@github.com:michaelliao/learngit.git
-git checkout -b dev origin/dev
+git checkout -b dev origin/dev  //git checkout -b <branch> --track <remote>/<branch>
 ```
 ```bash
 git clone git@github.com:michaelliao/learngit.git
-git checkout -b dev
-git branch -u origin/dev	//git branch --set-upstream dev origin/dev
+git checkout -b dev //创建并切换到dev分支
+git branch -u origin/dev	//设置上游分支
 ```
+
+**注意：** `git checkout <branch>`没有加`--no-guess`选项时，会先在本地查找当前分支，未找到则会查找远程仓库
 
 #### 修改提交
 ```
@@ -62,6 +65,12 @@ git remote add origin git@github.com:michaelliao/learngit.git
 git push -u origin master
 ```
 
+#### 创建删除远程分支
+```bash
+git push origin serverfix:serverfix
+git push origin --delete serverfix
+```
+
 #### 配置别名
 全局配置文件存放在`~/.gitconfig`
 将日志打印的优雅：
@@ -69,6 +78,5 @@ git push -u origin master
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
 
-
-**注意：**本地存在多个分支时，新建分支要先切换到主分支。
+**git文档地址：https://www.git-scm.com/book/zh/v2**
 
