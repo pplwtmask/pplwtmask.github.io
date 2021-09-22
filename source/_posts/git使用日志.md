@@ -17,6 +17,12 @@ git clone git@github.com:michaelliao/learngit.git
 git checkout -b dev //创建并切换到dev分支
 git branch -u origin/dev	//设置上游分支
 ```
+```bash
+$ git pull origin next
+或
+$ git fetch origin
+$ git merge origin/next
+```
 
 **注意：** `git checkout <branch>`没有加`--no-guess`选项时，会先在本地查找当前分支，未找到则会查找远程仓库
 
