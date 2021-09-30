@@ -1,6 +1,6 @@
 ---
-title: pringboot之mybatis自动配置（一）
-date: 2021-09-30 15:38:06
+title: springboot之mybatis自动配置（一）
+date: 2021-09-29 15:38:06
 ---
 
 了解springboot自动配置之前需要先了解mybatis的使用，以及mybatis如何集成到spring，还要了解一下工厂方法设计模式。
