@@ -1,5 +1,5 @@
 ---
-title: springboot之mybatis自动配置（一）
+title: springboot之mybatis自动配置
 date: 2021-09-29 15:38:06
 ---
 
@@ -153,6 +153,109 @@ public class FooServiceImpl implements FooService {
 ```
 
 [官方文档](http://mybatis.org/spring/zh/getting-started.html)
+
+
+### 4.springboot自动配置mybatis
+
+依赖于springboot的自动配置原理，启动时会扫描META-INF/spring.factories下的文件，反射获取类信息，并完成自动配置。
+打开mybatis自动配置jar包下的文件内容如下：
+```xml
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+```
+找到自动配置的类MybatisAutoConfiguration，
+```
+@org.springframework.context.annotation.Configuration
+@ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
+@ConditionalOnBean(DataSource.class)
+@EnableConfigurationProperties(MybatisProperties.class)
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
+public class MybatisAutoConfiguration {
+	...
+}
+```
+通过注解可以看到配置的条件，以及`MybatisProperties`配置文件的信息,之前需要手动创建的sqlSessionFactory、sqlSessionTemplate都已经帮我们做好了配置，修改配置信息只需要修改配置文件即可
+```
+@Bean
+@ConditionalOnMissingBean
+public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+	...
+}
+@Bean
+@ConditionalOnMissingBean
+public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+	ExecutorType executorType = this.properties.getExecutorType();
+	if (executorType != null) {
+	return new SqlSessionTemplate(sqlSessionFactory, executorType);
+	} else {
+	return new SqlSessionTemplate(sqlSessionFactory);
+	}
+}
+```
+完成了sqlSessionFactory的创建，那么Mapper的接口是如何创建的呢？
+```
+@org.springframework.context.annotation.Configuration
+@Import({ AutoConfiguredMapperScannerRegistrar.class })
+@ConditionalOnMissingBean(MapperFactoryBean.class)
+public static class MapperScannerRegistrarNotFoundConfiguration {
+
+	@PostConstruct
+	public void afterPropertiesSet() {
+	logger.debug("No {} found.", MapperFactoryBean.class.getName());
+	}
+}
+```
+可见这也是个配置类，spring工厂中没有这个MapperFactoryBean实例时，会自动导入AutoConfiguredMapperScannerRegistrar进行自动配置，
+```
+public static class AutoConfiguredMapperScannerRegistrar
+implements BeanFactoryAware, ImportBeanDefinitionRegistrar, ResourceLoaderAware {
+
+	private BeanFactory beanFactory;
+
+	private ResourceLoader resourceLoader;
+
+	@Override
+	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+
+		logger.debug("Searching for mappers annotated with @Mapper");
+
+		ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
+
+		try {
+			if (this.resourceLoader != null) {
+				scanner.setResourceLoader(this.resourceLoader);
+			}
+
+			List<String> packages = AutoConfigurationPackages.get(this.beanFactory);
+			if (logger.isDebugEnabled()) {
+				for (String pkg : packages) {
+					logger.debug("Using auto-configuration base package '{}'", pkg);
+				}
+			}
+
+			scanner.setAnnotationClass(Mapper.class);
+			scanner.registerFilters();
+			scanner.doScan(StringUtils.toStringArray(packages));
+		} catch (IllegalStateException ex) {
+			logger.debug("Could not determine auto-configuration package, automatic mapper scanning disabled.", ex);
+		}
+}
+```
+可见它会扫描BasePackages下@Mapper注解的类实现
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
