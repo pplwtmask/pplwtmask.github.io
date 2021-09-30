@@ -41,7 +41,7 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(input
     <mapper resource="org/mybatis/example/BlogMapper.xml"/>
   </mappers>
 </configuration>
-或
+----------java config
 DataSource dataSource = BlogDataSourceFactory.getBlogDataSource();
 TransactionFactory transactionFactory = new JdbcTransactionFactory();
 Environment environment = new Environment("development", transactionFactory, dataSource);
