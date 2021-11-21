@@ -30,6 +30,7 @@ date: 2021-06-06 15:38:06
 * [https://github.com/jesseduffield/lazygit](https://github.com/jesseduffield/lazygit)，Git命令的一个简单终端UI，用Gocui库写入。
 * [https://github.com/rustdesk/rustdesk](https://github.com/rustdesk/rustdesk)，远程桌面软件，开箱即用，无需任何配置，替代TeamViewer和AnyDesk。您完全掌控数据，不用担心安全问题。您可以使用我们的注册/中继服务器， 或者自己设置， 亦或者开发您的版本。
 * [https://github.com/XIU2/TrackersListCollection](https://github.com/XIU2/TrackersListCollection)，种子tracker
+* [https://github.com/avwo/whistle](https://github.com/avwo/whistle)，whistle是基于 Node 实现的跨平台抓包调试代理工具，非常强大。
 
 
 #### 实用
