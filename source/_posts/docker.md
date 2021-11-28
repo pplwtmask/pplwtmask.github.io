@@ -121,6 +121,81 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
+
+### docker常用命令
+进入容器:
+#### attach
+```
+$ docker run -dit ubuntu
+243c32535da7d142fb0e6df616a3c3ada0b8ab417937c853a9e1c251f499f550
+
+$ docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+243c32535da7        ubuntu:latest       "/bin/bash"         18 seconds ago      Up 17 seconds                           nostalgic_hypatia
+
+$ docker attach 243c
+root@243c32535da7:/#
+```
+注意：如果从这个 stdin 中 exit，会导致容器的停止。（不推荐使用）
+
+#### exec
+docker exec 后边可以跟多个参数，这里主要说明 -i -t 参数。
+只用 -i 参数时，由于没有分配伪终端，界面没有我们熟悉的 Linux 命令提示符，但命令执行结果仍然可以返回。
+当 -i -t 参数一起使用时，则可以看到我们熟悉的 Linux 命令提示符。
+```
+$ docker run -dit ubuntu
+69d137adef7a8a689cbcb059e94da5489d3cddd240ff675c640c8d96e84fe1f6
+
+$ docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+69d137adef7a        ubuntu:latest       "/bin/bash"         18 seconds ago      Up 17 seconds                           zealous_swirles
+
+$ docker exec -i 69d1 bash
+ls
+bin
+boot
+dev
+...
+
+$ docker exec -it 69d1 bash
+root@69d137adef7a:/#
+```
+
+
+导入导出：
+#### export、import、load
+```
+$ docker container ls -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                    PORTS               NAMES
+7691a814370e        ubuntu:18.04        "/bin/bash"         36 hours ago        Exited (0) 21 hours ago                       test
+$ docker export 7691a814370e > ubuntu.tar
+---------------------------------------------------------------------------------------------------------------------------------------------
+$ cat ubuntu.tar | docker import - test/ubuntu:v1.0
+$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED              VIRTUAL SIZE
+test/ubuntu         v1.0                9d37a6082e97        About a minute ago   171.3 MB
+$ docker import http://example.com/exampleimage.tgz example/imagerepo
+```
+>注：用户既可以使用 docker load 来导入镜像存储文件到本地镜像库，也可以使用 docker import 来导入一个容器快照到本地镜像库。这两者的区别在于容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积也要大。此外，从容器快照文件导入时可以重新指定标签等元数据信息。
+
+### 删除
+```
+$ docker container rm trusting_newton
+trusting_newton
+```
+`-f` 参数。Docker 会发送 SIGKILL 信号给容器.
+删除所有终止状态的容器
+```
+$ docker container prune
+```
+
+
+
+
+
+
+
+
 [参考手册](https://yeasy.gitbook.io/docker_practice/)
 [参考手册](https://vuepress.mirror.docker-practice.com/)
 
