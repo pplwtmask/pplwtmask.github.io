@@ -147,6 +147,67 @@ FROM 就是指定 基础镜像，因此一个 Dockerfile 中 FROM 是必备的�
 #### RUN 执行命令
 每一条指令(Instruction)构建一层，因此每一条指令的内容，就是描述该层应当如何构建，因此不应该写多个run
 
+#### WORKDIR 指定工作目录（当前目录）
+以后各层的当前目录就被改为指定的目录，如该目录不存在，WORKDIR 会帮你建立目录。
+错误示例：以下操作并不会在/app下创建world.txt
+```
+RUN cd /app   //这一层进去/app目录下
+RUN echo "hello" > world.txt      //在当前目录（工作目录）下创建world.txt
+```
+
+#### COPY 复制上下文文件到工作目录
+包含元数据，比如读、写、执行权限、文件变更时间等。
+在 Docker 官方的 [Dockerfile 最佳实践文档](https://yeasy.gitbook.io/docker_practice/appendix/best_practices) 中要求，尽可能的使用 COPY，因为 COPY 的语义很明确，就是复制文件而已，而 ADD 则包含了更复杂的功能，其行为也不一定很清晰。最适合使用 ADD 的场合，就是所提及的需要自动解压缩的场合。
+```
+COPY hom* /mydir/
+COPY hom?.txt /mydir/
+```
+
+#### CMD 指定容器启动时，执行的命令
+在运行时可以指定新的命令来替代镜像设置中的这个默认命令，比如`docker run -it ubuntu cat /etc/os-release`,`cat /etc/os-release`代替了`/bin/bash`
+`CMD ["可执行文件", "参数1", "参数2"...]`，推荐使用这种格式，shell脚本格式会被解析成`CMD [ "sh", "-c", "echo $HOME" ]`
+>注意：对于容器而言，其启动程序就是容器应用进程，容器就是为了主进程而存在的，主进程退出，容器就失去了存在的意义，从而退出。
+
+#### ENTRYPOINT 给容器启动命令指定参数
+CMD 的内容作为参数传给 ENTRYPOINT 指令，`<ENTRYPOINT> "<CMD>"`,启动容器的时候可以传递CMD指定覆盖dockerfile中定义的CMD指令。
+
+#### ENV 、ARG 
+ARG指定的变量只能被下一层使用，在build的时可以通过参数`--build-arg`覆盖
+
+#### EXPOSE 声明暴漏端口
+* 帮助镜像使用者理解这个镜像服务的守护端口，以方便配置映射
+* 在运行时使用随机端口映射时，也就是 docker run -P 时，会自动随机映射 EXPOSE 的端口
+
+#### HEALTHCHECK 健康检查
+```
+FROM nginx
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD curl -fs http://localhost/ || exit 1
+```
+`docker inspect`可以来查看日志
+
+
+
+>注意：CMD、ENTRYPOINT、HEALTHCHECK 只可以出现一次，如果写了多个，只有最后一个生效。
+
+
+#### 构建镜像
+```
+$ docker build -t nginx:v3 .
+Sending build context to Docker daemon 2.048 kB
+Step 1 : FROM nginx
+ ---> e43d811ce2f4
+Step 2 : RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+ ---> Running in 9cdc27646c7b
+ ---> 44aa4490ce2c
+Removing intermediate container 9cdc27646c7b
+Successfully built 44aa4490ce2c
+```
+`.`是指定上下文，构建镜像时会将上下文上传给docker引擎，通过上下文拿到构建所需的所有文件。
+`-f ../Dockerfile.php`可以指定docker文件的位置
+
+
 
 ### docker常用命令
 
