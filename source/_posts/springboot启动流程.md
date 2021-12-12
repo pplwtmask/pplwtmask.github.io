@@ -28,7 +28,7 @@ public interface SpringApplicationRunListener {
 }
 ```
 
-```
+
 run()
 |
 |---->创建SpringApplication---实例化ApplicationContextInitializer、ApplicationListener
@@ -58,4 +58,4 @@ run()
 |
 |
 结束
-```
+
