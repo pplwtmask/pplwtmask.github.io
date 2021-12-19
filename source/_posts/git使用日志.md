@@ -77,6 +77,11 @@ git push origin serverfix:serverfix
 git push origin --delete serverfix
 ```
 
+#### 合并两个无关联的仓库
+```
+$git pull origin master --allow-unrelated-histories
+```
+
 #### 配置别名
 全局配置文件存放在`~/.gitconfig`
 将日志打印的优雅：
