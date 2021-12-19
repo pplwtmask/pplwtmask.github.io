@@ -28,12 +28,9 @@ $ git merge origin/next
 
 #### 修改提交
 ```
-git commit --amend -m "new message"
-```
-
-```bash
-git add <file_name>
-git commit --amend HEAD~1
+git commit -m 'initial commit'
+git add forgotten_file
+git commit --amend
 ```
 
 #### 版本回退
