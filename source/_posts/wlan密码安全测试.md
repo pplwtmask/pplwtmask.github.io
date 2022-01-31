@@ -64,7 +64,7 @@ aircrack-ng -a2 -b 9C:5C:8E:C9:AB:C0 -w rockyou.txt hackme.cap
 等待出现`KEY FOUND!`时，则成功解密
 
 ### hashcat解密
-hashcat是世界上最快，最先进的密码恢复实用程序，支持五种独特的攻击模式，适用于300多种高度优化的哈希算法。hashcat 目前在 Linux、Windows 和 macOS 上支持 CPU、GPU 和其他硬件加速器，并具有帮助启用分布式密码破解的功能。
+[hashcat](https://github.com/hashcat/hashcat)是世界上最快，最先进的密码恢复实用程序，支持五种独特的攻击模式，适用于300多种高度优化的哈希算法。hashcat 目前在 Linux、Windows 和 macOS 上支持 CPU、GPU 和其他硬件加速器，并具有帮助启用分布式密码破解的功能。
 
 * 通过[cap2hccapx](https://hashcat.net/cap2hccapx/)将cap文件转化为hashcat需要的格式
 * 通过[example_hashes](https://hashcat.net/wiki/doku.php?id=example_hashes),搜索wap加密的Hash-Mode
