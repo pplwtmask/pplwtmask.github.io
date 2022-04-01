@@ -67,8 +67,8 @@ Reapply commits on top of another base tip
 ```
 # 将最新的三次提交压缩到一次
 git rebase -i HEAD~3
-
-
+# 将当前dev代码rebase到当前分支，删除分支后将是一条直线
+git rebase dev
 ```
 
 #### 添加远程仓库
