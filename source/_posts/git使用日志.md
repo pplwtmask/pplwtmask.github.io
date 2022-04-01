@@ -64,9 +64,10 @@ git stash pop
 
 #### rebase
 Reapply commits on top of another base tip
+
 ```
-# 将最新的三次提交压缩到一次
-git rebase -i HEAD~3
+# 将某次提交作为base，并修改之后的提交，可以删除，压缩等等
+git rebase -i commit_hash
 # 将当前dev代码rebase到当前分支，删除分支后将是一条直线
 git rebase dev
 ```
