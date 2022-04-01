@@ -62,6 +62,15 @@ git stash list
 git stash pop
 ```
 
+#### rebase
+Reapply commits on top of another base tip
+```
+# 将最新的三次提交压缩到一次
+git rebase -i HEAD~3
+
+
+```
+
 #### 添加远程仓库
 ```bash
 git remote add origin git@github.com:michaelliao/learngit.git
