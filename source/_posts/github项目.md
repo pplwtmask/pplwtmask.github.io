@@ -34,7 +34,7 @@ date: 2021-06-06 15:38:06
 #### 实用
 * [https://github.com/lyswhut/lx-music-desktop](https://github.com/lyswhut/lx-music-desktop)，一个基于 Electron + Vue 开发的音乐软件。
 * [https://github.com/fangzesheng/free-api](https://github.com/fangzesheng/free-api)，统计了网上诸多的免费API
-
+* [https://github.com/FelisCatus/SwitchyOmega](https://github.com/FelisCatus/SwitchyOmega),浏览器代理插件
 
 #### 渗透
 * [https://github.com/brannondorsey/wifi-cracking](https://github.com/brannondorsey/wifi-cracking)
