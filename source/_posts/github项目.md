@@ -19,6 +19,7 @@ date: 2021-06-06 15:38:06
 * [https://github.com/pandao/editor.md](https://github.com/pandao/editor.md)，markdown在线编辑的工具，可以嵌入到项目中。
 * [https://mmonit.com/monit](https://mmonit.com/monit),开源服务器监控工具，运维网站。[手册](https://mmonit.com/monit/documentation/monit.html)
 * [https://github.com/github/gitignore](https://github.com/github/gitignore)，`.gitignore`文件的配置
+* [https://github.com/yize/xswitch](https://github.com/yize/xswitch),请求链接转发，前后端联调神器。
 
 #### 工具
 * [https://github.com/dbeaver/dbeaver](https://github.com/dbeaver/dbeaver)，DBeaver是开发人员和数据库管理员的免费和开源通用数据库工具。
