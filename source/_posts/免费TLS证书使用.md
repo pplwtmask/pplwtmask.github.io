@@ -6,9 +6,10 @@ date: 2022-03-12 15:38:06
 ## 准备
 1. VPS，一台服务器，幸运的话可以申请到oracle cloud终身免费的服务器。
 2. 域名，免费的域名申请网站：[freenom](https://www.freenom.com/zh/index.html?lang=zh)
-3. 域名解析，[Cloudflare](https://www.cloudflare.com/zh-cn/lp/ppc/overview-x/?utm_source=baidu&utm_medium=CPC&utm_campaign=DG%7CAPAC%7CCN%7CTCN%7CC%7CSearch%7CBrand%7CBrand%7CSPC&utm_term=Cloudflare&sdclkid=AL2s15fibSDixOopbsj&bd_vid=8395319686181512141)提供免费的
-4. ssh工具，国内外很多
-5. 搭建一个网站，
+3. 域名解析，[Cloudflare](https://www.cloudflare.com/zh-cn)提供免费的
+4. 数据库，[db4free](https://db4free.net/)提供免费的，不要用于生产
+5. ssh工具，国内外很多
+6. 搭建一个网站，
 
 ## 安装 [acme.sh](https://github.com/acmesh-official/acme.sh)
 
