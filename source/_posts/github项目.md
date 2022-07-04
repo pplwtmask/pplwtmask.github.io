@@ -24,7 +24,7 @@ date: 2021-06-06 15:38:06
 #### 工具
 * [https://github.com/dbeaver/dbeaver](https://github.com/dbeaver/dbeaver)，DBeaver是开发人员和数据库管理员的免费和开源通用数据库工具。
 * [https://github.com/qishibo/AnotherRedisDesktopManager](https://github.com/qishibo/AnotherRedisDesktopManager)，更快，更好，更稳定的Redis Desktop Manager，与Linux，Windows，Mac兼容。 更重要的是，加载大量密钥时不会崩溃。
-* [https://github.com/XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)，查找适合自己当前网络环境的优选Cloudflare Anycast IP。
+* [https://github.com/XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest),[https://github.com/badafans/better-cloudflare-ip](https://github.com/badafans/better-cloudflare-ip)，查找适合自己当前网络环境的优选Cloudflare Anycast IP。
 * [https://github.com/fatedier/frp](https://github.com/fatedier/frp)，frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。
 * [https://github.com/rustdesk/rustdesk](https://github.com/rustdesk/rustdesk)，远程桌面软件，开箱即用，无需任何配置，替代TeamViewer和AnyDesk。您完全掌控数据，不用担心安全问题。您可以使用我们的注册/中继服务器， 或者自己设置， 亦或者开发您的版本。
 * [https://github.com/XIU2/TrackersListCollection](https://github.com/XIU2/TrackersListCollection)，种子tracker
