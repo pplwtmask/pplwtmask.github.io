@@ -1,5 +1,5 @@
 ---
-title: git使用日志
+title: git使用的一些常用命令
 date: 2021-05-21 15:38:06
 ---
 
@@ -62,6 +62,7 @@ git reset --hard origin/<branch_name> //重置原始版本
 
 #### 删除中间某次提交
 ```bsah
+//删除某次提交并生成新的提交记录，注意：A分支已经revert某次提交1094a,B分支想重新merge1094a的提交需要删除revert的那次提交
 git revert -n 1094a
 git commit -m "revert 1094a"
 git push
@@ -78,7 +79,7 @@ git stash pop
 Reapply commits on top of another base tip
 
 ```
-# 将某次提交作为base，并修改之后的提交，可以删除，压缩等等
+# 将某次提交作为base，并修改之后的提交，可以删除中间的多次提交，压缩等等
 git rebase -i commit_hash
 # 将当前dev代码rebase到当前分支，删除分支后将是一条直线
 git rebase dev
