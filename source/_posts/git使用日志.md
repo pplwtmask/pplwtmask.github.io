@@ -14,8 +14,20 @@ git checkout -b dev origin/dev  //git checkout -b <branch> --track <remote>/<bra
 ```
 ```bash
 git clone git@github.com:michaelliao/learngit.git
-git checkout -b dev //创建并切换到dev分支
-git branch -u origin/dev	//设置上游分支
+git checkout -b feature //创建并切换到dev分支
+//coding...
+git diff //查看硬盘（working tree）和本地仓库的差异
+git add . //注意：如果有不想提交的文件不要用`.`
+git commit -m 'your descroption'
+git push -u origin feature //将当前分支推送到远程并设置上游分支
+//master分支有其它人的新的提交
+git checkout master
+git pull origin master
+git checkout feature
+git rebase master //以master分支的最新提交为基础，这样提交是一条直线
+//maybe have to resovel conflict
+git push -f origin feature
+//create pull request(gitlab is merge request)
 ```
 ```bash
 $ git pull origin next
