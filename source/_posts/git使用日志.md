@@ -63,6 +63,7 @@ git reset --hard origin/<branch_name> //重置原始版本
 #### 删除中间某次提交
 ```bsah
 //删除某次提交并生成新的提交记录，注意：A分支已经revert某次提交1094a,B分支想重新merge1094a的提交需要删除revert的那次提交
+//总之一句话，想要合并已经revert的分支，需要revert你的revert
 git revert -n 1094a
 git commit -m "revert 1094a"
 git push
