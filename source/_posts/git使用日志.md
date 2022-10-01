@@ -81,6 +81,7 @@ Reapply commits on top of another base tip
 
 ```
 # 将某次提交作为base，并修改之后的提交，可以删除中间的多次提交，压缩等等
+# 使用rebase删除会修改rebase某次提交之后的所有提交，相当于是把之后的每次提交重新提交了一次
 git rebase -i commit_hash
 # 将当前dev代码rebase到当前分支，删除分支后将是一条直线
 git rebase dev
