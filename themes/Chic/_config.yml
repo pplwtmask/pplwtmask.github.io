@@ -72,7 +72,7 @@ post_copyright_license_text: Copyright (c) 2019 <a href="http://creativecommons.
 post_copyright_slogan_enable: true
 post_copyright_slogan_text: Do you believe in <strong>DESTINY</strong>?
 ## toc
-post_toc_enable: true
+post_toc_enable: false
 
 # Page
 page_title_enable: true
