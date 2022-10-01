@@ -16,7 +16,7 @@ nickname: Armin Yu
 
 ### this variable is MarkDown form.
 description: 江月何年初照人 江畔何人初见月
-avatar: /image/avatar.jpeg
+avatar: /img/logo.png
 
 # main menu navigation
 ## links key words should not be changed.
@@ -46,7 +46,7 @@ links:
   #Instagram:
   #Reddit:
   # YouTube:
-  QQ: 769020460
+  # QQ: 769020460
   # Weibo:
   # WeChat:
   Github: https://github.com/pplwtmask
@@ -67,7 +67,7 @@ post_copyright_enable: true
 
 post_copyright_author_enable: true
 post_copyright_permalink_enable: true
-post_copyright_license_enable: true
+post_copyright_license_enable: false
 post_copyright_license_text: Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE
 post_copyright_slogan_enable: true
 post_copyright_slogan_text: Do you believe in <strong>DESTINY</strong>?
