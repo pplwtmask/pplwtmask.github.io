@@ -90,6 +90,8 @@ git rebase dev
 #### 添加远程仓库
 ```bash
 git remote add origin git@github.com:michaelliao/learngit.git
+//合并两个无关联的仓库
+git pull origin master --allow-unrelated-histories
 git push -u origin master
 ```
 
@@ -99,10 +101,6 @@ git push origin serverfix:serverfix
 git push origin --delete serverfix
 ```
 
-#### 合并两个无关联的仓库
-```
-$git pull origin master --allow-unrelated-histories
-```
 
 #### 配置别名
 全局配置文件存放在`~/.gitconfig`
