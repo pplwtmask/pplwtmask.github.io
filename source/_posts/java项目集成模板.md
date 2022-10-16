@@ -10,4 +10,4 @@ date: 2021-02-16 15:38:06
 * [tutorials](https://github.com/eugenp/tutorials)，集成了大部分java相关的项目
 
 
-**注意：** 可以在github后加1s后访问更直观0.0，例如 https://github1s.com/seata/seata-samples
+**注意：** 可以在github后加1s后或将.com换成.dev访问更直观0.0，例如 https://github1s.com/seata/seata-samples
