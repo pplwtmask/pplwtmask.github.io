@@ -5,7 +5,7 @@ date: 2022-03-12 15:38:06
 
 ## 准备
 1. VPS，一台服务器，幸运的话可以申请到oracle cloud终身免费的服务器。
-2. 域名，免费的域名申请网站：[freenom](https://www.freenom.com/zh/index.html?lang=zh)
+2. 域名，免费的域名申请网站：[freenom](https://www.freenom.com/zh/index.html?lang=zh)，[自动续期](https://github.com/luolongfei/freenom)
 3. 域名解析，[Cloudflare](https://www.cloudflare.com/zh-cn)提供免费的
 4. 数据库，[db4free](https://db4free.net/)提供免费的，不要用于生产
 5. ssh工具，国内外很多
