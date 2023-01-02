@@ -22,6 +22,7 @@ date: 2021-06-06 15:38:06
 * [https://github.com/XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest),[https://github.com/badafans/better-cloudflare-ip](https://github.com/badafans/better-cloudflare-ip)，查找适合自己当前网络环境的优选Cloudflare Anycast IP。
 * [https://github.com/XIU2/TrackersListCollection](https://github.com/XIU2/TrackersListCollection)，种子tracker
 * [https://github.com/Privoce/vocechat-web](https://github.com/Privoce/vocechat-web)，开源聊天app
+* [https://github.com/RedisInsight/RedisInsight](https://github.com/RedisInsight/RedisInsight)，redis可视化工具，官方
 
 
 
