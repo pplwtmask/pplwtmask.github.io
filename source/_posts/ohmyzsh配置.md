@@ -3,6 +3,9 @@ title: ohmyzsh配置
 date: 2022-04-07 15:38:06
 ---
 
+## 更新
+GitHub新的终端美化工具，[oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh)
+
 ## 环境
 * macos
 
