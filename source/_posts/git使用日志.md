@@ -6,6 +6,8 @@ date: 2021-05-21 15:38:06
 
 ### git使用记录
 
+![](/img/git-conmand.png)
+
 #### 一般流程
 
 ```bash
