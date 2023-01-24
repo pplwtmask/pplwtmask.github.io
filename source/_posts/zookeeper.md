@@ -1,5 +1,5 @@
 ---
-title: kafka笔记
+title: zookeeper
 date: 2023-1-24 15:38:06
 ---
 
