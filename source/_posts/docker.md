@@ -16,7 +16,7 @@ date: 2021-11-28 15:38:06
 仓库名经常以 两段式路径 形式出现，比如 jwilder/nginx-proxy，前者往往意味着 Docker Registry 多用户环境下的用户名，后者则往往是对应的软件名。
 
 ### 安装
-[安装指南](https://docs.docker.com/get-docker/)
+[安装教程](https://docs.docker.com/engine/install/#server)
 
 ### dockerfile
 
