@@ -7,6 +7,9 @@ date: 2022-02-14 15:38:06
 
 ## 基本配置
 Oracle Cloud的CentOS或Ubuntu自带系统，需要关闭防火墙和后台监管服务
+> 注意关闭SELinux
+> 1. 临时关闭 `# setenforce 0`
+> 2. 永久关闭 /etc/selinux/config 'SELINUX=disabled' or `sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config;`
 
 CentOS:
 ```
