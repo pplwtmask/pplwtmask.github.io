@@ -1,6 +1,6 @@
 ---
 title: Kubernete with docker
-date: 2023-01-26 15:38:06
+date: 2023-01-25 15:38:06
 ---
 
 
@@ -36,6 +36,13 @@ systemctl restart docker
 ```
 
 #### 3.初始化控制平面节点
+
+##### 准备
+
+选择一个 Pod 网络插件（此时不安装需要传递参数），并验证是否需要为 kubeadm init 传递参数。 根据你选择的第三方网络插件，你可能需要设置 --pod-network-cidr 的值。 请参阅[安装 Pod 网络附加组件](https://kubernetes.io/zh-cn/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network)。
+一个网络插件：https://github.com/flannel-io/flannel/
+
+`kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock`
 
 成功的标志:
 ```
@@ -97,5 +104,7 @@ iz8vbia14zbe5y5mt3rka9z   Ready    control-plane   109m   v1.26.1
 
 
 
+#### 删除节点
 
+https://kubernetes.io/zh-cn/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#remove-the-node
 
