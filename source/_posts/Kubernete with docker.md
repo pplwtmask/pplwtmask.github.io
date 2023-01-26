@@ -40,7 +40,7 @@ systemctl restart docker
 ##### 准备
 
 选择一个 Pod 网络插件（此时不安装需要传递参数），并验证是否需要为 kubeadm init 传递参数。 根据你选择的第三方网络插件，你可能需要设置 --pod-network-cidr 的值。 请参阅[安装 Pod 网络附加组件](https://kubernetes.io/zh-cn/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network)。
-一个网络插件：https://github.com/flannel-io/flannel/
+本教程使用如下插件：https://github.com/flannel-io/flannel/
 
 `kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock`
 
@@ -87,8 +87,7 @@ iz8vbia14zbe5y5mt3rka9z   NotReady   control-plane   51m   v1.26.1
 ```
 [安装 Pod 网络附加组件](https://kubernetes.io/zh-cn/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network)：
 
-执行命令：`kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml`
-> 可以用代理下载然后上传服务器。
+执行命令：`kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml`。
 
 安装 Pod 网络后，你可以通过在 `kubectl get pods --all-namespaces` 输出中检查 CoreDNS Pod 是否 Running 来确认其是否正常运行。 一旦 CoreDNS Pod 启用并运行，你就可以继续加入节点
 ```
