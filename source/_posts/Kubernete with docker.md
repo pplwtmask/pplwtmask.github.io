@@ -91,7 +91,23 @@ iz8vbia14zbe5y5mt3rka9z   NotReady   control-plane   51m   v1.26.1
 > 可以用代理下载然后上传服务器。
 
 安装 Pod 网络后，你可以通过在 `kubectl get pods --all-namespaces` 输出中检查 CoreDNS Pod 是否 Running 来确认其是否正常运行。 一旦 CoreDNS Pod 启用并运行，你就可以继续加入节点
-状态：
+```
+[root@iZ8vbia14zbe5y5mt3rka9Z ~]# kubectl get pods --all-namespaces
+NAMESPACE      NAME                                              READY   STATUS    RESTARTS   AGE
+kube-flannel   kube-flannel-ds-5z22d                             1/1     Running   0          16s
+kube-flannel   kube-flannel-ds-c57lm                             1/1     Running   0          16s
+kube-system    coredns-787d4945fb-7mz59                          1/1     Running   0          4m1s
+kube-system    coredns-787d4945fb-9h7mm                          1/1     Running   0          4m1s
+kube-system    etcd-iz8vbia14zbe5y5mt3rka9z                      1/1     Running   0          4m14s
+kube-system    kube-apiserver-iz8vbia14zbe5y5mt3rka9z            1/1     Running   0          4m15s
+kube-system    kube-controller-manager-iz8vbia14zbe5y5mt3rka9z   1/1     Running   0          4m14s
+kube-system    kube-proxy-tfrb5                                  1/1     Running   0          89s
+kube-system    kube-proxy-vzf79                                  1/1     Running   0          4m1s
+kube-system    kube-scheduler-iz8vbia14zbe5y5mt3rka9z            1/1     Running   0          4m16s
+```
+
+
+最终状态：
 ```
 [root@iZ8vbia14zbe5y5mt3rka9Z ~]# kubectl get nodes
 NAME                      STATUS   ROLES           AGE    VERSION
