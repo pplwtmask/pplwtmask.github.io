@@ -16,7 +16,18 @@ https://kubernetes.io/zh-cn/docs/setup/production-environment/tools/kubeadm/inst
 
 #### 1.安装环境
 安装docker看[查看本博客其它文章](http://preferman.github.io/2021/11/28/docker/)
-看上述文档
+
+##### 安装容器运行时
+Docker Engine 没有实现 CRI， 而这是容器运行时在 Kubernetes 中工作所需要的。 为此，必须安装一个额外的服务 cri-dockerd。 cri-dockerd 是一个基于传统的内置 Docker 引擎支持的项目， 它在 1.24 版本从 kubelet 中移除。
+1. 根据linux发行版下载二进制文件[地址](https://github.com/Mirantis/cri-dockerd/releases)，也可以自行编译
+2. 安装cri-dockerd
+3. 执行命令`systemctl daemon-reload
+systemctl enable cri-docker.service
+systemctl enable --now cri-docker.socket`
+> 不同linux发行版有所差异
+
+##### [安装 kubeadm、kubelet 和 kubectl](https://kubernetes.io/zh-cn/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)
+
 #### 2.配置容器运行时驱动
 k8s使用docker作为容器：
 
