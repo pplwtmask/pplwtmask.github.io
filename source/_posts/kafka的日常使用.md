@@ -79,6 +79,13 @@ HW和LEO
 
 HW俗称高水位，HighWatermark的缩写，取一个partition对应的ISR中最小的LEO(log-end-offset)作为HW，consumer最多只能消费到HW所在的位置。另外每个replica都有HW,leader和follower各自负责更新自己的HW的状态。对于leader新写入的消息，consumer不能立刻消费，leader会等待该消息被所有ISR中的replicas同步后更新HW，此时消息才能被consumer消费。这样就保证了如果leader所在的broker失效，该消息仍然可以从新选举的leader中获取。
 
+### 遇到的一些问题
+
+#### Subject xxx is in read-only mode
+
+> [解决方法](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#mode)
+
+
 
 
 
