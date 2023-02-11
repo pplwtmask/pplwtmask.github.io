@@ -25,6 +25,9 @@ date: 2023-02-10 15:38:06
 此时执行 `curl -6 ipinfo.io` 可以看到你的ip信息
 
 
+## 开启bbr
+
+- https://github.com/jinwyp/one_click_script
 
 ## ipv6-only变双栈服务器
 
@@ -45,6 +48,36 @@ TUN或TUNnel与以太网设备非常相似，或者我们可以称之为“虚�
 
 
 检查是否开启了TUN，`cat /dev/net/tun`,如果显示cat: /dev/net/tun: No such file or directory， 则表示没开启， 如果显示cat: /dev/net/tun: File descriptor in bad state，则是开启了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
