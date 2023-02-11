@@ -27,7 +27,7 @@ date: 2023-02-10 15:38:06
 
 ## 开启bbr
 
-- https://github.com/jinwyp/one_click_script
+`wget -O tcp.sh "https://git.io/coolspeeda" && chmod +x tcp.sh && ./tcp.sh`
 
 ## ipv6-only变双栈服务器
 
