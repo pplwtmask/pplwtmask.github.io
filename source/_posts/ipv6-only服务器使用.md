@@ -27,7 +27,12 @@ date: 2023-02-10 15:38:06
 
 ## 开启bbr
 
+仅限KVM
+卸载内核版本 (一般用这个即可)
 `wget -O tcp.sh "https://git.io/coolspeeda" && chmod +x tcp.sh && ./tcp.sh`
+不卸载内核版本
+`wget -O tcpx.sh "https://git.io/JYxKU" && chmod +x tcpx.sh && ./tcpx.sh`
+
 
 ## ipv6-only变双栈服务器
 
