@@ -1,5 +1,5 @@
 ---
-title: JdbcTemplate和TransactionTemplate是如何配合来控制事务的
+title: JdbcTemplate and TransactionTemplate
 date: 2022-08-27 15:38:06
 ---
 
