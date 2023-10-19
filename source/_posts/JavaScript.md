@@ -273,3 +273,43 @@ xiaoming.hello(); // Hello, 小明!
 传统的原型链继承实现起来是比较麻烦的，所以新的关键字class从ES6开始正式被引入到JavaScript中，class的目的就是让定义类更简单。
 
 
+
+---
+tip1: 本地运行得html和js会因为浏览器的安全限制以file://开头的地址无法执行联网等js代码。
+tip2: js引擎会在每个语句的结尾加上`;`，可能会导致如下错误。
+	function foo() {
+		return
+			{ name: 'foo' };
+	}
+
+	foo(); // undefined
+tip3: 未用var声明的变量都是全局变量，同一个页面的不同js文件中的变量会互相影响； strict模式强制使用var
+tip4: 实际上JavaScript对象的所有属性都是字符串，不过属性对应的值可以是任意数据类型。
+tip5: 判断一个js对象是否有改属性（'name' in xiaoming; // true）而不是继承的可以用函数hasOwnProperty()
+tip6: js对象可以作为Map来用，但是为了规避键值只能是字符串的问题所以ES6引入了Map
+tip7: Array Map 和 Set都属于iterable类型所以可以用ES6的for of遍历，interable内置的forEach方法遍历更好
+tip8: 由于JavaScript的变量提升（js的函数定义有个特点，它会先扫描整个函数体的语句，把所有申明的变量“提升”到函数顶部）这一怪异的“特性”，我们在函数内部定义变量时，请严格遵守“在函数内部首先申明所有变量”这一规则
+tip9: 不在任何函数内定义的变量就具有全局作用域,被绑定到window对象上。
+tip10: 为了解决块级作用域，ES6引入了新的关键字let，用let替代var可以申明一个块级作用域的变量，这样后面的语句就访问不到i，for (let i=0; i<100; i++) { sum += i; }
+tip11: js可以使用apply改变函数的this指向， fuc1.apply(null, [])
+tip12: 箭头函数看上去是匿名函数的一种简写，但实际上，箭头函数和匿名函数有个明显的区别：箭头函数内部的this是词法作用域，由上下文确定。可以修复this指向的问题
+
+diffrence with java:
+1. 12.000===12, js中整型和浮点型都是Number类型，可以直接进行比较
+2. '' 和 "", js中都表示String，java中前者表示char，后者表示String
+3. js数组可以直接越界赋值而不报错，var arr = [1, 2, 3]; arr[5] = 'x'; arr; // arr变为[1, 2, 3, undefined, undefined]
+4. 遍历一个js对象可以用for in循环， java需要用反射
+5. js的函数中可以嵌套函数
+
+
+
+
+
+
+
+
+
+
+
+
+
