@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>计算机网络学习 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">计算机网络学习</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">二月 18, 2022&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="计算机网络学习"><a href="#计算机网络学习" class="headerlink" title="计算机网络学习"></a>计算机网络学习</h1><blockquote>
+<p>互联网时代网络编程是必不可少的，对于程序员来说，了解必要网络知识是必须的，无论是在测试、开发、还是网络安全等各方面都起到了重大的作用。</p>
+</blockquote>
+<h2 id="网络交换"><a href="#网络交换" class="headerlink" title="网络交换"></a>网络交换</h2><p>在计算机网络中，交换(switching)的含义就是转接，把一条电话线转接到另一条电话线，使他们之间连通起来。</p>
+<h3 id="发展"><a href="#发展" class="headerlink" title="发展"></a>发展</h3><p><strong>电路交换</strong>  — <strong>报文交换</strong> — <strong>分组交换</strong><br><strong>电路交换：</strong> 需要先建立物理连接，比较耗费通信资源<br><strong>报文交换：</strong> 可以随时发送报文，而不需要事先建立连接，整个报文先传送到相邻结点交换机，全部存储下来后进行查表转发，转发到下一个结点交换机。比较占用交换机存储资源，网络利用率不高。<br><strong>分组交换（目前采用的方式）：</strong> 在报文交换的基础上将报文进行分组，到达之后再进行重组。</p>
+<h2 id="网络体系结构"><a href="#网络体系结构" class="headerlink" title="网络体系结构"></a>网络体系结构</h2><blockquote>
+<p>计算机科学领域的任何问题都可以通过增加一个间接的中间层来解决，为了解决计算机不同厂商软硬件差一的问题计算机分层出现了。</p>
+</blockquote>
+<p>OSI（开放系统互连参考模型）七层标准模型是法律上的国际标准模型，但是由于它出现的比较晚，而且相对复杂以及存在不合理性（功能重复），实际上TCP/IP四层模型是事实上的国际标准。<br>用于网络互连的路由器中，也带有符合TCP/IP体系结构标准的TCP/IP协议族，只不过路由器一般只包含网络接口层和网际层。<br>学习时，会综合OSI和TCP/IP模型的优点，学习五层模型：</p>
+<p><img src="/img/%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82.png"><br>1、应用层按HTTP协议的规定，构建一个HTTP请求报文。</p>
+<p>2、应用层将HTTP报文交给传输层处理，传输层给HTTP请求报文增加一个TCP首部，使之成为TCP报文段。该首部的作用是区分应用进程，以及实现可靠传输。</p>
+<p>3、传输层将TCP报文段交付给网络层处理，网络层给TCP报文段增加一个IP首部，使之成为IP数据报。该首部的作用是标识了IP地址，可以让数据报被路由器转发。</p>
+<p>4、网络层将IP数据报交付给数据链路层处理，数据链路层给IP数据报添加一个首部和一个尾部，使之成为帧。帧首部作用是标识了MAC地址，使之可以在一个网络内被目的主机接收。帧尾部是诸如FCS校验，作用是让目的主机判断所接收到的帧是否有误码。</p>
+<p>5、数据链路层将数据交付给物理层，物理层将帧看作是比特流，我们这里用以太网为例，比特流前面要增加前导码，目的是让目的主机做好接收帧的准备，并将上述比特流转为相应电/光信号通过传输介质传输出去。</p>
+<p>6、信号通过传输介质到达路由器，路由器的物理层将信号变换为比特流，然后去掉前导码后将其交付给数据链路层，数据链路层即可拿到帧，数据链路层再将帧首部和尾部去掉后交付给网络层，此时就是IP数据报，网络层拿到IP数据报后解析首部，从中提取出目的网络地址，然后查找自身路由表，确定转发端口，以便进行转发。OK，确定好如何转发后，这个数据就需要再次发送出去，那么同样地，网络层交付给数据链路层，数据链路层交付给物理层，物理层同样将比特流加上前导码，转为相应电/光信号通过传输介质传输出去。</p>
+<p>7、信号终于来到web服务器，物理层将收到的信号转为比特流，去掉前导码交付给数据链路层，数据链路层拿到帧后，去掉帧的首部和尾部，交付给网络层，此时网络层拿到了IP数据报，网络层将IP数据报首部去掉后，交付给传输层，此时传输层拿到了TCP报文段，传输层将TCP报文段的首部去掉后，交付给应用层，此时应用层即可拿到HTTP请求报文了。随后应用层就会对HTTP请求报文进行解析，然后给客户端发回HTTP响应报文。</p>
+<p>8、HTTP响应报文与之前的过程类似，也需要经过层层封装，经过物理层变换为相应信号，最后通过传输介质传输，客户端收到信号后，将其转换为比特流，再通过层层解封，最终取出HTTP响应报文，客户端即可根据响应报文进行页面渲染，我们终于看到了一个网页。</p>
+<h3 id="传输差错"><a href="#传输差错" class="headerlink" title="传输差错"></a>传输差错</h3><p><strong>比特差错：</strong> 数据链路层，传输过程中比特可能由1到0，或由0到1<br><strong>分组丢失：</strong> 当路由器R输入队列满了，则会主动丢弃该分组。<br><strong>分组失序：</strong> 主机A依次发送了分组1、2、3，但是到达主机B可能是3、2、1这样的顺序。<br><strong>分组重复：</strong> 某个分组由于某种原因在网络中滞留，没有及时到达主机B，这可能造成主机A对该分组的超时重发，重发的分组到达主机B，但是一段时间后滞留的分组也到达了主机B，引发分组重复问题。</p>
+<p>实现可靠传输的三种机制：停止等待协议SW、回退N帧协议GBN、选择重传协议SR，可应用在网络体系的各层协议中。</p>
+<h4 id="停止等待协议SW（stop-and-wait）"><a href="#停止等待协议SW（stop-and-wait）" class="headerlink" title="停止等待协议SW（stop-and-wait）"></a>停止等待协议SW（stop-and-wait）</h4><p>发送方每发送完一个分组，就停止发送下一个数据分组，等待来自接收方的确认分组或否认分组，若收到确认分组（ACK），则可继续发送下一个数据分组；若收到否认分组（NAK），则重发之前发送的那个数据分组。<br><a href="">ackiamge</a></p>
+<p><strong>问题一：</strong> 发送方数据分组在传输过程中丢失，可以设置超时重传解决<br><strong>问题二：</strong> 接收方的ACK或NAK分组在传输过程中丢失，此时会触发重传机制，导致分组重复，可以根据序号去重。<br><strong>问题三：</strong> 接收方的ACK或NAK分组迟到了，0号分组接收到1号分组的ack，导致分组乱序，对ack、nak进行编号。</p>
+<h4 id="回退N帧协议（GBN）"><a href="#回退N帧协议（GBN）" class="headerlink" title="回退N帧协议（GBN）"></a>回退N帧协议（GBN）</h4><h4 id="选择重传协议（SR）"><a href="#选择重传协议（SR）" class="headerlink" title="选择重传协议（SR）"></a>选择重传协议（SR）</h4><h3 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h3><blockquote>
+<p>IP 地址实际上是网络和机器的地址，更确切地说，IP 地址的一部分代表网络的地址，另一部分代表机器的地址。</p>
+</blockquote>
+<p>ip地址编码为32位，为了方便记忆，采用点分十进制的方法来编写，将四个字节以点分割，每个字节能表示2的8次方个十进制数，也就是0-255。</p>
+<h3 id="子网掩码（Network-Address）"><a href="#子网掩码（Network-Address）" class="headerlink" title="子网掩码（Network Address）"></a>子网掩码（Network Address）</h3><blockquote>
+<p>用来区分网络地址和机器地址（主机地址），子网掩码中为 1 的二进制位代表 IP 地址的网络部分（网络地址），子网掩码中为 0 的二进制位代表 IP 地址的主机部分（主机地址）。</p>
+</blockquote>
+<p>可以将 192.168.0.1 / 255.255.255.0 简写为 192.168.0.1/24，表示前24位都是1</p>
+<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><blockquote>
+<p>为运行在不同主机上的应用进程提供直接的通信服务，又称端到端协议，传输层使用端口来对应不同的进程（程序），向应用层屏蔽了下层网络的细节，提供了两种不同的传输协议UDP、TCP</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aVzrtPpy2tri3EFdWTJNcQ">学习地址</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2022/02/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">http://preferman.github.io/2022/02/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/03/06/tg%E8%87%AA%E5%8A%A8%E7%AD%BE%E5%88%B0/">TG自动签到</a>
+            
+            
+            <a class="next" rel="next" href="/2022/02/14/Oracle%20Cloud%E9%85%8D%E7%BD%AE/">Oracle Cloud配置</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

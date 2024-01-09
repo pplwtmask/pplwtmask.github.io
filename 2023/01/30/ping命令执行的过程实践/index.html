@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>ping命令执行的过程实践 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ping命令执行的过程实践</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 30, 2023&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="ping命令执行的过程实践"><a href="#ping命令执行的过程实践" class="headerlink" title="ping命令执行的过程实践"></a>ping命令执行的过程实践</h1><blockquote>
+<p>网络包在物理层传输是根据mac地址进行传输的</p>
+</blockquote>
+<h2 id="ping-执行的过程"><a href="#ping-执行的过程" class="headerlink" title="ping 执行的过程"></a>ping 执行的过程</h2><ul>
+<li>根据路由表和目标ip计算走哪个网卡</li>
+<li>根据网卡的ip和子网掩码计算源ip和目标ip是否在一个子网<ul>
+<li>源ip和目标ip在一个子网<br>查询arp缓存中是否存在目标ip的mac地址<ul>
+<li><p>不存在<br>给整个子网的所有机器广播发送一个 arp查询，并缓存结果</p>
+</li>
+<li><p>存在</p>
+<p>把ping命令封成一个icmp包，填上包头（包括IP、mac地址）</p>
+</li>
+</ul>
+</li>
+<li>源ip和目标ip不在同一个子网<br>通过网关进行转发<br>网关查看目标ip是否是自己的<ul>
+<li>不是<br>重复以上步骤</li>
+<li>是<br>处理请求响应信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>整个过程mac地址一直在变，源ip和目标ip不变</p>
+<h3 id="源ip和目标ip不在一个子网"><a href="#源ip和目标ip不在一个子网" class="headerlink" title="源ip和目标ip不在一个子网"></a>源ip和目标ip不在一个子网</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ8vba21wy1jbsrm04fdrbZ ~]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         172.17.111.253  0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">10.244.0.0      10.244.0.0      255.255.255.0   UG    0      0        0 flannel.1</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0</span><br><span class="line">172.17.96.0     0.0.0.0         255.255.240.0   U     0      0        0 eth0</span><br><span class="line">172.18.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">[root@iZ8vba21wy1jbsrm04fdrbZ ~]# arp -a | grep 172.17.111.253</span><br><span class="line">gateway (172.17.111.253) at ee:ff:ff:ff:ff:ff [ether] on eth0</span><br><span class="line">[root@iZ8vba21wy1jbsrm04fdrbZ ~]# tcpdump -netvv -i eth0 icmp</span><br><span class="line">tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">00:16:3e:09:4f:29 &gt; ee:ff:ff:ff:ff:ff, ethertype IPv4 (0x0800), length 98: (tos 0x0, ttl 64, id 37748, offset 0, flags [DF], proto ICMP (1), length 84)</span><br><span class="line">    172.17.99.209 &gt; 110.242.68.4: ICMP echo request, id 27090, seq 1, length 64</span><br><span class="line">ee:ff:ff:ff:ff:ff &gt; 00:16:3e:09:4f:29, ethertype IPv4 (0x0800), length 98: (tos 0x14, ttl 50, id 37748, offset 0, flags [DF], proto ICMP (1), length 84)</span><br><span class="line">    110.242.68.4 &gt; 172.17.99.209: ICMP echo reply, id 27090, seq 1, length 64</span><br></pre></td></tr></table></figure>
+
+<h3 id="源ip和目标ip在同一个子网"><a href="#源ip和目标ip在同一个子网" class="headerlink" title="源ip和目标ip在同一个子网"></a>源ip和目标ip在同一个子网</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ8vba21wy1jbsrm04fdrbZ ~]# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         172.17.111.253  0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">10.244.0.0      10.244.0.0      255.255.255.0   UG    0      0        0 flannel.1</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0</span><br><span class="line">172.17.96.0     0.0.0.0         255.255.240.0   U     0      0        0 eth0</span><br><span class="line">172.18.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">[root@iZ8vba21wy1jbsrm04fdrbZ ~]# arp -a | grep 172.17.99.208</span><br><span class="line">? (172.17.99.208) at ee:ff:ff:ff:ff:ff [ether] on eth0</span><br><span class="line">[root@iZ8vba21wy1jbsrm04fdrbZ ~]# tcpdump -netvv -i eth0 icmp</span><br><span class="line">tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">00:16:3e:09:4f:29 &gt; ee:ff:ff:ff:ff:ff, ethertype IPv4 (0x0800), length 98: (tos 0x0, ttl 64, id 32302, offset 0, flags [DF], proto ICMP (1), length 84)</span><br><span class="line">    172.17.99.209 &gt; 172.17.99.208: ICMP echo request, id 2417, seq 1, length 64</span><br><span class="line">ee:ff:ff:ff:ff:ff &gt; 00:16:3e:09:4f:29, ethertype IPv4 (0x0800), length 98: (tos 0x0, ttl 64, id 35464, offset 0, flags [none], proto ICMP (1), length 84)</span><br><span class="line">    172.17.99.208 &gt; 172.17.99.209: ICMP echo reply, id 2417, seq 1, length 64</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2023/01/30/ping%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B%E5%AE%9E%E8%B7%B5/">http://preferman.github.io/2023/01/30/ping%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B%E5%AE%9E%E8%B7%B5/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/02/10/ipv6-only%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/">ipv6-only服务器使用</a>
+            
+            
+            <a class="next" rel="next" href="/2023/01/25/Kubernete%20with%20docker/">Kubernete with docker</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

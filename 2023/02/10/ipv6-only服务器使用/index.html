@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>ipv6-only服务器使用 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ipv6-only服务器使用</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">二月 10, 2023&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="ipv6的vps使用"><a href="#ipv6的vps使用" class="headerlink" title="ipv6的vps使用"></a>ipv6的vps使用</h1><blockquote>
+<p>截止到2023/2/11，ipv6还没有普及，但是各大运营商已经支持ipv6，可能只需要在路由器开启ipv6，测试当前网络是否支持ipv6：<a target="_blank" rel="noopener" href="https://ipv6-test.com/%EF%BC%88%E5%BD%93%E5%89%8D%E5%8F%AF%E7%94%A8%E4%B8%8D%E7%9F%A5%E9%81%93%E4%BB%A5%E5%90%8E%EF%BC%89">https://ipv6-test.com/（当前可用不知道以后）</a></p>
+</blockquote>
+<h2 id="连接到服务器"><a href="#连接到服务器" class="headerlink" title="连接到服务器"></a>连接到服务器</h2><ul>
+<li>如果自己的网络支持ipv6，那可以直接用ssh工具去连接</li>
+<li>如果自己网络不支持v6,那么可以通过在线ssh工具连接，自行搜索</li>
+<li>通过v4作为网关，实现端口转发，或者堡垒机等</li>
+</ul>
+<h2 id="登录之后设置"><a href="#登录之后设置" class="headerlink" title="登录之后设置"></a>登录之后设置</h2><p>以乌班图系统为例</p>
+<ul>
+<li>设置DNS64，这样就能解析ipv4的域名<blockquote>
+<p><code>echo -e &quot;nameserver 2a00:1098:2c::1\nnameserver 2a01:4f9:c010:3f02::1\nnameserver 2a00:1098:2b::1\n&quot; &gt; /etc/resolv.conf</code><br>dns地址<a target="_blank" rel="noopener" href="https://nat64.net/">https://nat64.net</a><br>此时执行 <code>curl -6 ipinfo.io</code> 可以看到你的ip信息</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="开启bbr"><a href="#开启bbr" class="headerlink" title="开启bbr"></a>开启bbr</h2><p>仅限KVM<br>卸载内核版本 (一般用这个即可)<br><code>wget -O tcp.sh &quot;https://git.io/coolspeeda&quot; &amp;&amp; chmod +x tcp.sh &amp;&amp; ./tcp.sh</code><br>不卸载内核版本<br><code>wget -O tcpx.sh &quot;https://git.io/JYxKU&quot; &amp;&amp; chmod +x tcpx.sh &amp;&amp; ./tcpx.sh</code></p>
+<h2 id="ipv6-only变双栈服务器"><a href="#ipv6-only变双栈服务器" class="headerlink" title="ipv6-only变双栈服务器"></a>ipv6-only变双栈服务器</h2><p>安装CloudFlare WARP，这样你就能在v6的机器上用v4的网络，感谢CloudFlare</p>
+<p>可以通过一下github项目安装</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fscarmen/warp">https://github.com/fscarmen/warp</a> </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/P3TERX/warp.sh">https://github.com/P3TERX/warp.sh</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/crazypeace/warp.sh">https://github.com/crazypeace/warp.sh</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ViRb3/wgcf">https://github.com/ViRb3/wgcf</a></li>
+</ul>
+<p>此时执行<code>curl -4 ipinfo.io</code>, 你能看到cf给你分配的ipv4的地址</p>
+<h2 id="开启tun"><a href="#开启tun" class="headerlink" title="开启tun"></a>开启tun</h2><p>TUN或TUNnel与以太网设备非常相似，或者我们可以称之为“虚拟接口”，主要用于某些VPN协议，如OpenVPN，以路由发送和接收网络流量。因此，如果要安装VPN，必须启用TUN。</p>
+<p>检查是否开启了TUN，<code>cat /dev/net/tun</code>,如果显示cat: /dev/net/tun: No such file or directory， 则表示没开启， 如果显示cat: /dev/net/tun: File descriptor in bad state，则是开启了</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2023/02/10/ipv6-only%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/">http://preferman.github.io/2023/02/10/ipv6-only%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/03/27/pixel5%E5%88%B7%E6%9C%BA/">pixel5刷机</a>
+            
+            
+            <a class="next" rel="next" href="/2023/01/30/ping%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B%E5%AE%9E%E8%B7%B5/">ping命令执行的过程实践</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

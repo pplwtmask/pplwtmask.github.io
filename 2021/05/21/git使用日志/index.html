@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>git使用的一些常用命令 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">git使用的一些常用命令</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">五月 21, 2021&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="git使用记录"><a href="#git使用记录" class="headerlink" title="git使用记录"></a>git使用记录</h3><p><img src="/img/git-conmand.png"></p>
+<h4 id="一般流程"><a href="#一般流程" class="headerlink" title="一般流程"></a>一般流程</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:michaelliao/learngit.git</span><br><span class="line">git checkout -b dev origin/dev  //git checkout -b &lt;branch&gt; --track &lt;remote&gt;/&lt;branch&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:michaelliao/learngit.git</span><br><span class="line">git checkout -b feature //创建并切换到dev分支</span><br><span class="line">//coding...</span><br><span class="line">git diff //查看硬盘（working tree）和本地仓库的差异</span><br><span class="line">git add . //注意：如果有不想提交的文件不要用`.`</span><br><span class="line">git commit -m <span class="string">&#x27;your descroption&#x27;</span></span><br><span class="line">git push -u origin feature //将当前分支推送到远程并设置上游分支</span><br><span class="line">//master分支有其它人的新的提交</span><br><span class="line">git checkout master</span><br><span class="line">git pull origin master</span><br><span class="line">git checkout feature</span><br><span class="line">git rebase master //以master分支的最新提交为基础，这样提交是一条直线</span><br><span class="line">//maybe have to resovel conflict</span><br><span class="line">git push -f origin feature</span><br><span class="line">//create pull request(gitlab is merge request)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git pull origin next</span><br><span class="line">或</span><br><span class="line">$ git fetch origin</span><br><span class="line">$ git merge origin/next</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> <code>git checkout &lt;branch&gt;</code>没有加<code>--no-guess</code>选项时，会先在本地查找当前分支，未找到则会查找远程仓库</p>
+<h4 id="修改提交"><a href="#修改提交" class="headerlink" title="修改提交"></a>修改提交</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &#x27;initial commit&#x27;</span><br><span class="line">git add forgotten_file</span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+
+<h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">git reset --hard 1094a</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+
+<h4 id="撤销回退"><a href="#撤销回退" class="headerlink" title="撤销回退"></a>撤销回退</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line">git reset --hard 1094a</span><br><span class="line">git reset --soft 1094a //保留更改</span><br><span class="line">git reset --hard origin/&lt;branch_name&gt; //重置原始版本</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除中间某次提交"><a href="#删除中间某次提交" class="headerlink" title="删除中间某次提交"></a>删除中间某次提交</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//删除某次提交并生成新的提交记录，注意：A分支已经revert某次提交1094a,B分支想重新merge1094a的提交需要删除revert的那次提交</span><br><span class="line">//总之一句话，想要合并已经revert的分支，需要revert你的revert</span><br><span class="line">git revert -n 1094a</span><br><span class="line">git commit -m &quot;revert 1094a&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h4 id="隐藏工作区"><a href="#隐藏工作区" class="headerlink" title="隐藏工作区"></a>隐藏工作区</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git stash list</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+
+<h4 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h4><p>Reapply commits on top of another base tip</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将某次提交作为base，并修改之后的提交，可以删除中间的多次提交，压缩等等</span><br><span class="line"># 使用rebase删除会修改rebase某次提交之后的所有提交，相当于是把之后的每次提交重新提交了一次</span><br><span class="line">git rebase -i commit_hash</span><br><span class="line"># 将当前dev代码rebase到当前分支，删除分支后将是一条直线</span><br><span class="line">git rebase dev</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:michaelliao/learngit.git</span><br><span class="line">//合并两个无关联的仓库</span><br><span class="line">git pull origin master --allow-unrelated-histories</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建删除远程分支"><a href="#创建删除远程分支" class="headerlink" title="创建删除远程分支"></a>创建删除远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin serverfix:serverfix</span><br><span class="line">git push origin --delete serverfix</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h4><p>全局配置文件存放在<code>~/.gitconfig</code><br>将日志打印的优雅：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.lg <span class="string">&quot;log --color --graph --pretty=format:&#x27;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#x27; --abbrev-commit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>git文档地址：<a target="_blank" rel="noopener" href="https://www.git-scm.com/book/zh/v2">https://www.git-scm.com/book/zh/v2</a></strong></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2021/05/21/git%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97/">http://preferman.github.io/2021/05/21/git%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/06/06/github%E9%A1%B9%E7%9B%AE/">github项目</a>
+            
+            
+            <a class="next" rel="next" href="/2021/05/16/EL7%E5%AE%89%E8%A3%85MYSQL/">EL7安装MYSQL</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

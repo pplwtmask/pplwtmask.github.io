@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>pixel5刷机 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">pixel5刷机</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">三月 27, 2023&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="pixel5刷机配置"><a href="#pixel5刷机配置" class="headerlink" title="pixel5刷机配置"></a>pixel5刷机配置</h1><p>以window11+pixle5为例，其它的手机可以根据需要自动调整<br>驱动win11会自动安装</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ul>
+<li>window/mac/linux</li>
+<li>type-c数据线（自带）</li>
+</ul>
+<h2 id="刷机前置准备"><a href="#刷机前置准备" class="headerlink" title="刷机前置准备"></a>刷机前置准备</h2><h3 id="adb工具安装"><a href="#adb工具安装" class="headerlink" title="adb工具安装"></a>adb工具安装</h3><p>根据不同的平台选择不同的二进制文件，可以加到环境变量种也可以不加。<a target="_blank" rel="noopener" href="https://developer.android.com/studio/releases/platform-tools">下载地址</a></p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>根据自己的手机型号下载对应的版本，不同的手机厂商可再官网下载rom或者从XDA论坛找适用第三方rom，<a target="_blank" rel="noopener" href="https://developers.google.com/android/images">pixle手机rom下载地址</a><br>下载最新的magisk apk文件，<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/releases">下载地址</a></p>
+<h2 id="刷机步骤"><a href="#刷机步骤" class="headerlink" title="刷机步骤"></a>刷机步骤</h2><ul>
+<li>开发者模式下开启oem lock,数据线连接到手机，使用命令检验是否连接成功<code>adb devices -l</code></li>
+<li>开机状态下，打开开发者模式并允许adb调试，使用adb工具<code>adb reboot bootloader</code>；关机状态下载长按开机键+音量下键，不同的手机不一样自行查询</li>
+<li>解锁bootloader，执行<code>fastboot flashing unlock</code></li>
+<li>(可选)清空用户数据<code>fastboot -w</code>,一般刷第三方rom需要执行此步骤</li>
+<li>如果没有将adb添加到环境变量可以临时设置当前shell的变量<code>set PATH=%CD%;%PATH%</code>,需要进入到包含adb可执行文件的目录</li>
+<li>解压下载的pixel rom，进入目录，执行命令<code>flash-all</code>，等刷写完成</li>
+<li>重启并安装magisk</li>
+<li>使用官方安装教程安装设置magisk，<a target="_blank" rel="noopener" href="https://topjohnwu.github.io/Magisk/install.html">教程地址</a></li>
+</ul>
+<h2 id="刷机后设置"><a href="#刷机后设置" class="headerlink" title="刷机后设置"></a>刷机后设置</h2><h3 id="安装模块safetynet-fix"><a href="#安装模块safetynet-fix" class="headerlink" title="安装模块safetynet-fix"></a>安装模块safetynet-fix</h3><ul>
+<li>使用magisk安装<a target="_blank" rel="noopener" href="https://github.com/kdrag0n/safetynet-fix/releases">safetynet-fix</a>，以通过谷歌的safetynet验证，很多银行、金融、支付类的app需要校验。</li>
+<li>在Magisk设置种开启Zygisk\Enforce DenyList,可以在Configure DenyList种添加要隐藏root的app</li>
+</ul>
+<h3 id="安装VoLTE-VoWiFi-5G模块"><a href="#安装VoLTE-VoWiFi-5G模块" class="headerlink" title="安装VoLTE VoWiFi 5G模块"></a>安装VoLTE VoWiFi 5G模块</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/stanislawrogasik/Pixel5-VoLTE-VoWiFi">GitHub地址</a>,支持在不同的国家不同的地址开启volte、vowifi以及5g支持</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2023/03/27/pixel5%E5%88%B7%E6%9C%BA/">http://preferman.github.io/2023/03/27/pixel5%E5%88%B7%E6%9C%BA/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/05/12/ANTLR/">ANTLR</a>
+            
+            
+            <a class="next" rel="next" href="/2023/02/10/ipv6-only%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/">ipv6-only服务器使用</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>some tools | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">some tools</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 10, 2020&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://geekuninstaller.com/download">geek uninstaller</a>，软件卸载工具，可以强制卸载自带的系统软件，清理卸载留下的垃圾及注册表信息。</li>
+<li><a target="_blank" rel="noopener" href="https://www.ccleaner.com/">ccleaner</a>，清理系统垃圾，帮你管理电脑，加快电脑的相应速度。</li>
+<li><a target="_blank" rel="noopener" href="https://www.7-zip.org/">7zip</a>，压缩软件，超级好用。</li>
+<li><a target="_blank" rel="noopener" href="http://www.uderzo.it/main_products/space_sniffer/download_alt.html">spacesniffer</a>，可视化磁盘清理工具。</li>
+<li><a target="_blank" rel="noopener" href="https://www.chuyu.me/zh-Hans/">Dism++</a>，清理系统垃圾，禁用开机启动，备份系统等。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hellzerg/optimizer">optimizer</a>,最好的windows优化工具</li>
+<li><a target="_blank" rel="noopener" href="https://windhawk.net/">Windhawk</a>，可以魔改windows系统的插件</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/massgravel/Microsoft-Activation-Scripts/">Microsoft-Activatio</a>，windows激活工具</li>
+</ul>
+<h3 id="办公"><a href="#办公" class="headerlink" title="办公"></a>办公</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://winmerge.org/">winmerge</a>，开源的文件对比工具</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mltframework/shotcut">Shotcut</a>，开源免费的视频剪辑软件</li>
+<li><a target="_blank" rel="noopener" href="https://final2x.tohru.top/">final2x</a>，优化图片清晰度，可以优化视频</li>
+<li><a target="_blank" rel="noopener" href="https://handbrake.fr/">handbrake</a>，视频压缩</li>
+<li><a target="_blank" rel="noopener" href="https://www.henrypp.org/product/memreduct">henrypp</a>，内存监控和清理，轻量</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/studyzy/imewlconverter/releases">imewlconverter</a>，词库转换器，不在局限于一种输入法</li>
+<li><a target="_blank" rel="noopener" href="https://www.hoptodesk.com/cn">hoptodesk</a>，远程工具，主要是小，轻量，好用</li>
+</ul>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://file-converter.org/">converter</a>，开源的文件批量转换工具。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Snipaste">snipaste</a>，貌似身边的人都在用它了，截图可以贴在屏幕的任何地方，取代cv。。。</li>
+<li><a target="_blank" rel="noopener" href="https://obsproject.com/">OBS</a>，开源免费的录屏软件，听说不错。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NickeManarin/ScreenToGif/releases">ScreenToGif</a>，录屏软件，开源免费</li>
+<li><a target="_blank" rel="noopener" href="http://www.care-eyes.com/">care-eyes</a>，护眼工具</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DevelopersTree/permadelete/releases">permadelete</a>，彻底删除文件得软件，经过此软删除后磁盘恢复工具无法恢复。</li>
+<li><a target="_blank" rel="noopener" href="http://www.dropitproject.com/">dropit</a>，一直期待的软件，可以自定义规则，帮你整理文件</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pot-app/pot-desktop">pot</a>,开源款平台划词翻译软件，没用过</li>
+<li><a target="_blank" rel="noopener" href="https://www.upscayl.org/">upscayl</a>，开源图片放大</li>
+</ul>
+<h3 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/snowie2000/mactype">mactype</a>，可以设置苹果字体，免费开源</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rocksdanister/lively">Lively Wallpaper</a>，Lively Wallpaper 是一款开源免费的 Windows 动态桌面/视频壁纸/桌面美化软件，它可以让你的 PC 桌面“骚动起来”，一打开电脑就能感受到扑面而来的酷炫动画效果视觉冲击！每天都能让你心情大好。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tatsu-syo/noMeiryoUI/releases">noMeiryoUI</a>，win更换字体，附赠一个好看得字体<a target="_blank" rel="noopener" href="https://github.com/lxgw/LxgwWenKai">LxgwWenKai</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mydockfinder/mydockfinder-for-Win10-Win11">mydockfinder</a>，看名字就知道这玩意是干嘛的了</li>
+</ul>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.dual-subtitles.com/zh-CN/whatsnew/3.6.2">whatsnew</a>，视频字幕翻译</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2020/01/10/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">http://preferman.github.io/2020/01/10/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/01/10/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">some sites</a>
+            
+            
+            <a class="next" rel="next" href="/2020/01/01/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">本博客搭建教程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

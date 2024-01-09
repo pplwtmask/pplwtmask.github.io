@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>EL7安装MYSQL | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">EL7安装MYSQL</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">五月 16, 2021&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="mysql5-7安装"><a href="#mysql5-7安装" class="headerlink" title="mysql5.7安装"></a>mysql5.7安装</h3><p>系统环境：RHEL7，不适用于Fedora 32, 33, and 34</p>
+<p><strong>注意：</strong> 如果安装过第三方版本请参考 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/index.html#repo-qg-yum-replacing">Replacing a Native Third-Party Distribution of MySQL.</a></p>
+<h4 id="上传下载工具安装（非必须）："><a href="#上传下载工具安装（非必须）：" class="headerlink" title="上传下载工具安装（非必须）："></a>上传下载工具安装（非必须）：</h4><p>也可以使用ftp工具上传下载，属于个人喜好</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install lrzsz -y</span><br></pre></td></tr></table></figure>
+<h4 id="使用yum安装MYSQL"><a href="#使用yum安装MYSQL" class="headerlink" title="使用yum安装MYSQL"></a>使用yum安装MYSQL</h4><ol>
+<li>添加MySQL Yum存储库<br>进入<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/repo/yum/">下载地址</a>选择对应的rpm包，执行<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell&gt; rpm -Uvh platform-and-version-specific-package-name.rpm</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>注意：</strong>通过yum update命令进行的所有系统范围内的更新都将自动升级系统上的MySQL软件包，并且还会替换任何本机的第三方软件包（如果有的话） 在MySQL Yum存储库中找到它们的替代品。</p>
+<ol start="2">
+<li>选择存储库中的MYSQL版本安装<br>使用MySQL Yum存储库时，默认情况下会选择安装最新的GA版本的MySQL因为默认启动最新版本subrepositories ，所以需要手动指定安装版本。<br>可以使用命令查看当前启动的子存储库：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist all | grep mysql</span><br></pre></td></tr></table></figure>
+修改使用的子存储库<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">yum-config-manager --<span class="built_in">disable</span> mysql80-community</span></span><br><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">yum-config-manager --<span class="built_in">enable</span> mysql57-community</span></span><br></pre></td></tr></table></figure>
+或者可以手动修改配置文件<code>/etc/yum.repos.d/mysql-community.repo</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[mysql80-community]</span><br><span class="line">name=MySQL 8.0 Community Server</span><br><span class="line">baseurl=http://repo.mysql.com/yum/mysql-8.0-community/el/6/$basearch/</span><br><span class="line">enabled=0</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Enable to use MySQL 5.7</span></span><br><span class="line">[mysql57-community]</span><br><span class="line">name=MySQL 5.7 Community Server</span><br><span class="line">baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql</span><br></pre></td></tr></table></figure>
+检查是否生效<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist all | grep mysql</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>注意：</strong>EL8包含MySQL module，它会屏蔽MYSQL的仓库，需要禁用<code>yum module disable mysql</code></p>
+<ol start="3">
+<li>安装mysql<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="4">
+<li>启动服务<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">systemctl start mysqld</span></span><br><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>注意：</strong><br>从MySQL5.7之后，会默认安装<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/validate-password.html">validate_password plugin</a>,且当数据目录是空时会做如下动作：</p>
+<ul>
+<li>初始化服务器</li>
+<li>SSL证书和密钥文件在数据目录中生成。</li>
+<li>创建一个超级用户帐户“ root” @“ localhost”。 设置超级用户的密码并将其存储在错误日志文件中。 要显示它，请使用以下命令：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">grep <span class="string">&#x27;temporary password&#x27;</span> /var/log/mysqld.log</span></span><br></pre></td></tr></table></figure>
+通过临时密码修改root密码：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">shell&gt; </span><span class="language-bash">mysql -uroot -p</span></span><br><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;MyNewPass4!&#x27;</span>;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2021/05/16/EL7%E5%AE%89%E8%A3%85MYSQL/">http://preferman.github.io/2021/05/16/EL7%E5%AE%89%E8%A3%85MYSQL/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/05/21/git%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97/">git使用的一些常用命令</a>
+            
+            
+            <a class="next" rel="next" href="/2021/05/16/%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/">跳板机多机器部署脚本</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

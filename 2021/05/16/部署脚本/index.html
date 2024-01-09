@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>跳板机多机器部署脚本 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">跳板机多机器部署脚本</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">五月 16, 2021&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="本地机器"><a href="#本地机器" class="headerlink" title="本地机器"></a>本地机器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &#x27;building fat jar&#x27;</span><br><span class="line">git pull</span><br><span class="line">mvn clean package -Dmaven.test.skip</span><br><span class="line"></span><br><span class="line">echo &#x27;building tarball&#x27;</span><br><span class="line">image_name=&#x27;&#x27;</span><br><span class="line">tag=`date +%s`</span><br><span class="line">docker_file_path=&#x27;&#x27;</span><br><span class="line">jar_loaction=&#x27;&#x27;</span><br><span class="line">properties_location=&#x27;&#x27;</span><br><span class="line">resources_location=&#x27;&#x27;</span><br><span class="line">server_host=&#x27;&#x27;</span><br><span class="line">deploy_script=&#x27;&#x27;</span><br><span class="line">key_location=&#x27;&#x27;</span><br><span class="line">pod_deploy_script=&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">rm -rf ./deploy</span><br><span class="line">makdir -p ./deploy/app</span><br><span class="line">makdir -p ./deploy/app/config</span><br><span class="line">cp $&#123;deploy_script&#125; ./deploy/deploy.sh</span><br><span class="line">cp $&#123;docker_file_path&#125; ./deploy/Dockerfile</span><br><span class="line">cp $&#123;pod_deploy_script&#125; ./deploy/pod-deploy.sh</span><br><span class="line">cp $&#123;jar_loaction&#125; ./deploy/app/app.jar</span><br><span class="line">cp $&#123;properties_location&#125; ./deploy/app/config/application.properties</span><br><span class="line">cp -r $&#123;resources_location&#125; ./deploy/app</span><br><span class="line">tar czvf deploy.tar.gz ./deploy --force-local &amp;&amp; rm -f ./deploy</span><br><span class="line"></span><br><span class="line">echo &#x27;uploading tarball to server&#x27;</span><br><span class="line">chmod 600 $&#123;key_location&#125;</span><br><span class="line">scp -i $&#123;key_location&#125; ./deploy.tar.gz root@$&#123;server_host&#125;:~/deploy.tar.gz &amp;&amp; rm -f ./deploy.tar.gz</span><br><span class="line">ssh -i $&#123;key_location&#125; root@$&#123;server_host&#125; makdir ~/$&#123;image_name&#125;-$&#123;tag&#125; &amp;&amp; tar xzvf ~/deploy.tar.gz -C ~/$&#123;image_name&#125;-$&#123;tag&#125; &amp;&amp; chmod +x ~/$&#123;image_name&#125;-$&#123;tag&#125;/deploy.sh &amp;&amp; bash ~/$&#123;image_name&#125;-$&#123;tag&#125;/deploy.sh $&#123;image_name&#125; $&#123;tag&#125; localhost 9999</span><br><span class="line">echo &#x27;server is executing&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:8u242-jre</span><br><span class="line">ENV LANG=zh_CN.UTF-8</span><br><span class="line">ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF-8</span><br><span class="line">RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; echo &#x27;Asia/Shanghai&#x27; &gt; /etc/timezone</span><br><span class="line">EXPOSE 8080</span><br><span class="line">WORKDIR /data</span><br><span class="line">HEALTHCHECK --retries=10 --interval=10s --timeout=30s --start-period=30s CMD curl -f -s &quot;&quot;</span><br><span class="line">COPY config/* /data/config</span><br><span class="line">COPY applaiction.properties /data/</span><br><span class="line">COPY main.jar /data/</span><br><span class="line">CMD [&quot;java&quot;,&quot;-jar&quot;,&quot;main.jar&quot;,&quot;--server.port=8080&quot;,&quot;--management.server.port=8099&quot;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="跳板机"><a href="#跳板机" class="headerlink" title="跳板机"></a>跳板机</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">image_name=$1</span><br><span class="line">tag=$2</span><br><span class="line">target=$3</span><br><span class="line">port=$4</span><br><span class="line"></span><br><span class="line">echo &#x27;building image&#x27;</span><br><span class="line">podman build -t $&#123;image_name&#125;:$&#123;tag&#125; ~/$&#123;image_name&#125;-$&#123;tag&#125;/deploy/app</span><br><span class="line">podman save -o ~/$&#123;image_name&#125;-$&#123;tag&#125;/pod-$&#123;image_name&#125;-$&#123;tag&#125;.tar $&#123;image_name&#125;:$&#123;tag&#125;</span><br><span class="line">podman image rm $&#123;image_name&#125;:$&#123;tag&#125;</span><br><span class="line">scp ~/$&#123;image_name&#125;-$&#123;tag&#125;/pod-$&#123;image_name&#125;-$&#123;tag&#125;.tar root@$&#123;target&#125;:~/deploy</span><br><span class="line">scp ~/$&#123;image_name&#125;-$&#123;tag&#125;/deploy/pod-deploy.sh root@$&#123;target&#125;:~/deploy/pod-deploy.sh</span><br><span class="line">ssh root@$&#123;target&#125; chmod +x ~/deploy/pod-deploy.sh &amp;&amp; bash ~/deploy/pod-deploy.sh $&#123;image_name&#125; $&#123;tag&#125; $&#123;port&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署机器"><a href="#部署机器" class="headerlink" title="部署机器"></a>部署机器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">image_name=$1</span><br><span class="line">tag=$2</span><br><span class="line">port=$3</span><br><span class="line"></span><br><span class="line">podman image prune -a</span><br><span class="line">echo &#x27;loading image&#x27;</span><br><span class="line">podman load -i ~/deploy/pod-$&#123;image_name&#125;-$&#123;tag&#125;.tar</span><br><span class="line">echo &#x27;loaded image&#x27;</span><br><span class="line">podman stop $&#123;image_name&#125;</span><br><span class="line">sleep 5</span><br><span class="line">podman run --restart=on-failure:3 -d -p $&#123;port&#125;:8080 --mount type=bind,source=/src/webapp,target=/usr/share/nginx/html --name $&#123;image_name&#125; $&#123;image_name&#125;:$&#123;tag&#125;</span><br><span class="line">echo &#x27;container started&#x27;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2021/05/16/%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/">http://preferman.github.io/2021/05/16/%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/05/16/EL7%E5%AE%89%E8%A3%85MYSQL/">EL7安装MYSQL</a>
+            
+            
+            <a class="next" rel="next" href="/2021/04/01/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

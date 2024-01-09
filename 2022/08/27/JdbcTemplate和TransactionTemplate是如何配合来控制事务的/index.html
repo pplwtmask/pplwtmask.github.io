@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>JdbcTemplate and TransactionTemplate | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">JdbcTemplate and TransactionTemplate</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 27, 2022&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="JdbcTemplate和TransactionTemplate是如何配合来控制事务的"><a href="#JdbcTemplate和TransactionTemplate是如何配合来控制事务的" class="headerlink" title="JdbcTemplate和TransactionTemplate是如何配合来控制事务的"></a>JdbcTemplate和TransactionTemplate是如何配合来控制事务的</h1><blockquote>
+<p>JdbcTemplate和TransactionTemplate是spring提供给我们用于操作数据库和数据库事务的非常重要的两个类，我们知道想要手动控制数据库事务是依赖于同一个数据库连接的，那么这两个类之间是如何相互配合做到精准控制的呢。<br>注：将访问数据库和事务控制分离出来符合面向对象设计原则的单一职责原则，不得不说spring的设计思想一直都是可以的：）</p>
+</blockquote>
+<h2 id="1-原生JDBC控制事务"><a href="#1-原生JDBC控制事务" class="headerlink" title="1.原生JDBC控制事务"></a>1.原生JDBC控制事务</h2><p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-usagenotes-connect-drivermanager.html">官方文档</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">       * 加载数据库驱动</span><br><span class="line">       * 可省略详见&#123;@link javax.sql.DataSource&#125;</span><br><span class="line">       */</span><br><span class="line">      Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;).newInstance();</span><br><span class="line"></span><br><span class="line">      Statement stmt = null;</span><br><span class="line">      ResultSet rs = null;</span><br><span class="line">      Connection conn = null;</span><br><span class="line">      boolean preAutoCommit = false;</span><br><span class="line"></span><br><span class="line">      try &#123;</span><br><span class="line"></span><br><span class="line">          conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost/test?&quot; +</span><br><span class="line">                  &quot;user=minty&amp;password=greatsqldb&quot;);</span><br><span class="line"></span><br><span class="line">          stmt = conn.createStatement();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">          preAutoCommit = conn.getAutoCommit();</span><br><span class="line">          </span><br><span class="line">          conn.setAutoCommit(false);</span><br><span class="line"></span><br><span class="line">          rs = stmt.executeQuery(&quot;SELECT foo FROM bar&quot;);</span><br><span class="line"></span><br><span class="line">          // or alternatively, if you don&#x27;t know ahead of time that</span><br><span class="line">          // the query will be a SELECT...</span><br><span class="line"></span><br><span class="line">          if (stmt.execute(&quot;SELECT foo FROM bar&quot;)) &#123;</span><br><span class="line">              rs = stmt.getResultSet();</span><br><span class="line">          &#125;</span><br><span class="line">          conn.commit();</span><br><span class="line">          // Now do something with the ResultSet ....</span><br><span class="line">      &#125;</span><br><span class="line">      catch (SQLException ex)&#123;</span><br><span class="line">          conn.rollback();</span><br><span class="line">          // handle any errors</span><br><span class="line">          System.out.println(&quot;SQLException: &quot; + ex.getMessage());</span><br><span class="line">          System.out.println(&quot;SQLState: &quot; + ex.getSQLState());</span><br><span class="line">          System.out.println(&quot;VendorError: &quot; + ex.getErrorCode());</span><br><span class="line">      &#125;</span><br><span class="line">      finally &#123;</span><br><span class="line">          // it is a good idea to release</span><br><span class="line">          // resources in a finally&#123;&#125; block</span><br><span class="line">          // in reverse-order of their creation</span><br><span class="line">          // if they are no-longer needed</span><br><span class="line"></span><br><span class="line">          if (rs != null) &#123;</span><br><span class="line">              try &#123;</span><br><span class="line">                  rs.close();</span><br><span class="line">              &#125; catch (SQLException sqlEx) &#123; &#125; // ignore</span><br><span class="line"></span><br><span class="line">              rs = null;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          if (stmt != null) &#123;</span><br><span class="line">              try &#123;</span><br><span class="line">                  stmt.close();</span><br><span class="line">              &#125; catch (SQLException sqlEx) &#123; &#125; // ignore</span><br><span class="line"></span><br><span class="line">              stmt = null;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">          if (conn != null) &#123;</span><br><span class="line">              try &#123;</span><br><span class="line">                  conn.setAutoCommit(preAutoCommit);</span><br><span class="line">                  conn.close();</span><br><span class="line">              &#125; catch (SQLException sqlEx) &#123; &#125; // ignore</span><br><span class="line"></span><br><span class="line">              conn = null;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-使用JdbcTemplate和TransactionTemplate控制事务"><a href="#2-使用JdbcTemplate和TransactionTemplate控制事务" class="headerlink" title="2.使用JdbcTemplate和TransactionTemplate控制事务"></a>2.使用JdbcTemplate和TransactionTemplate控制事务</h2><p>假定你已经做好了配置<br>可见相对于原生JDBC，代码非常的简单明了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">transactionTemplate.execute(new TransactionCallbackWithoutResult() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected void doInTransactionWithoutResult(TransactionStatus status) &#123;</span><br><span class="line">                jdbcTemplate.execute(&quot;INSERT INTO test.pet\n&quot; +</span><br><span class="line">                        &quot;(name, owner, species, sex, birth, death)\n&quot; +</span><br><span class="line">                        &quot;VALUES(&#x27;汪汪&#x27;, &#x27;小红&#x27;, &#x27;3232&#x27;, &#x27;男&#x27;, &#x27;1992-01-01 00:00:00&#x27;, &#x27;1992-01-01 00:00:00&#x27;);&quot;);</span><br><span class="line">                jdbcTemplate.execute(&quot;INSERT INTO test.pet\n&quot; +</span><br><span class="line">                        &quot;(name, owner, species, sex, birth, death)\n&quot; +</span><br><span class="line">                        &quot;VALUES(&#x27;汪汪&#x27;, &#x27;小红&#x27;, &#x27;3232&#x27;, &#x27;男&#x27;, &#x27;1992-01-01 00:00:00&#x27;, &#x27;1992-01-01 00:00:00&#x27;);&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="主要用到的类"><a href="#主要用到的类" class="headerlink" title="主要用到的类"></a>主要用到的类</h3><ul>
+<li><code>DataSourceTransactionManager</code>:事务管理器，主要用于管理事务</li>
+<li><code>TransactionDefinition</code>:定义了当前事务的基本信息，隔离性、传播性、超时时间、只读</li>
+<li><code>DataSourceTransactionObject</code>:<code>DataSourceTransactionManager</code>中的内部类，内部属性ConnectionHolder保存了当前线程的数据库连接，被用于类<code>DefaultTransactionStatus</code>中的属性transaction。</li>
+<li><code>TransactionSynchronizationManager</code>:管理每个线程的资源，比如当前线程的数据库连接</li>
+</ul>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p>这里只给出开启事务的核心代码<br><strong>开启事务之前会现在DataSourceTransactionObject中获取连接，不存在会直接在数据库连接池获取一个新的连接，然后放到DataSourceTransactionObject中；<br>最后会将持有连接ConnectionHolder以数据库为键存到TransactionSynchronizationManager中的ThreadLoacle中，为JdbcTemplate的执行做准备；</strong><br>org.springframework.jdbc.datasource.DataSourceTransactionManager#doBegin</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">		<span class="type">DataSourceTransactionObject</span> <span class="variable">txObject</span> <span class="operator">=</span> (DataSourceTransactionObject) transaction;</span><br><span class="line">		<span class="type">Connection</span> <span class="variable">con</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (!txObject.hasConnectionHolder() ||</span><br><span class="line">					txObject.getConnectionHolder().isSynchronizedWithTransaction()) &#123;</span><br><span class="line">				<span class="type">Connection</span> <span class="variable">newCon</span> <span class="operator">=</span> obtainDataSource().getConnection();</span><br><span class="line">				<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">					logger.debug(<span class="string">&quot;Acquired Connection [&quot;</span> + newCon + <span class="string">&quot;] for JDBC transaction&quot;</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				txObject.setConnectionHolder(<span class="keyword">new</span> <span class="title class_">ConnectionHolder</span>(newCon), <span class="literal">true</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			.</span><br><span class="line">			.</span><br><span class="line">			.</span><br><span class="line"><span class="comment">// Bind the connection holder to the thread.</span></span><br><span class="line">			<span class="keyword">if</span> (txObject.isNewConnectionHolder()) &#123;</span><br><span class="line">				TransactionSynchronizationManager.bindResource(obtainDataSource(), txObject.getConnectionHolder());</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>JdbcTemplate执行时，会先在TransactionSynchronizationManager中获取当前线程的ConnectionHolder，它里面存放这当前线程的连接，这样控制事务的连接和执行sql的连接保证了是同一个，这样就为我们成功的控制了事务</strong></p>
+<p>org.springframework.jdbc.datasource.DataSourceUtils#doGetConnection</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Assert.notNull(dataSource, &quot;No DataSource specified&quot;);</span><br><span class="line"></span><br><span class="line">ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);</span><br><span class="line">if (conHolder != null &amp;&amp; (conHolder.hasConnection() || conHolder.isSynchronizedWithTransaction())) &#123;</span><br><span class="line">	conHolder.requested();</span><br><span class="line">	if (!conHolder.hasConnection()) &#123;</span><br><span class="line">		logger.debug(&quot;Fetching resumed JDBC Connection from DataSource&quot;);</span><br><span class="line">		conHolder.setConnection(fetchConnection(dataSource));</span><br><span class="line">	&#125;</span><br><span class="line">	return conHolder.getConnection();</span><br><span class="line">&#125;</span><br><span class="line">// Else we either got no holder or an empty thread-bound holder here.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2022/08/27/JdbcTemplate%E5%92%8CTransactionTemplate%E6%98%AF%E5%A6%82%E4%BD%95%E9%85%8D%E5%90%88%E6%9D%A5%E6%8E%A7%E5%88%B6%E4%BA%8B%E5%8A%A1%E7%9A%84/">http://preferman.github.io/2022/08/27/JdbcTemplate%E5%92%8CTransactionTemplate%E6%98%AF%E5%A6%82%E4%BD%95%E9%85%8D%E5%90%88%E6%9D%A5%E6%8E%A7%E5%88%B6%E4%BA%8B%E5%8A%A1%E7%9A%84/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/10/17/%E6%95%99%E7%A8%8B/">记录了各种教程</a>
+            
+            
+            <a class="next" rel="next" href="/2022/05/31/%E6%A0%91%E8%8E%93%E6%B4%BE4B-%E8%BD%AF%E8%B7%AF%E7%94%B1%E7%AF%87/">树莓派4B-软路由篇</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

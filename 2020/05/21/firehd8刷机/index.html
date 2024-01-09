@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Armin">
+
+
+
+
+
+<title>fire hd8 2018 降级、ROOT、刷机硬核教程 | 星辉的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">⭐辉的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">⭐辉的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">fire hd8 2018 降级、ROOT、刷机硬核教程</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Armin</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">五月 21, 2020&nbsp;&nbsp;15:38:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="刷机步骤"><a href="#刷机步骤" class="headerlink" title="刷机步骤"></a>刷机步骤</h3><p><strong>环境准备：</strong> </p>
+<ul>
+<li><p>linux（最好是Ubuntu，可以装在优盘）</p>
+<blockquote>
+<p>安装 python3, PySerial, adb and fastboot. 对于Debian/Ubuntu系统，可以执行命令：<code>sudo apt install python3 python3-serial android-tools-adb android-tools-fastboot</code></p>
+</blockquote>
+</li>
+<li><p>铜线（操作方便）或其它导电体</p>
+</li>
+<li><p>塑料翘片（打开平板后盖，其实很简单！）</p>
+</li>
+<li><p>数据线（最好是平板自带的数据线）</p>
+</li>
+</ul>
+<p><strong>附件目录：</strong></p>
+<ul>
+<li>amonet.tar.gz</li>
+<li>6300.zip</li>
+<li>Magisk-v18.0.zip</li>
+<li>finalize.zip</li>
+</ul>
+<p>文件下载链接：</p>
+<p><strong>刷机步骤：</strong></p>
+<ul>
+<li>将平板关机（未连接电脑），注意如果安装了<code>ModemManager</code>要禁用或者卸载。</li>
+<li>打开平板的后盖，（没有螺丝，是卡扣卡住的，很简单就能打开）</li>
+<li>打开后看到主板的左边有四个测试点，依次是DAT0, RST, CMD, CLK，只需要将CLK接地即可（可以用铜线或其它方式）。</li>
+<li>解压文件<code>amonet.tar.gz</code>并执行命令<code>./bootrom-step.sh</code>,此时窗口将显示”Waiting for the bootrom”</li>
+<li>此时将接地完成的平板连接电脑，等待窗口显示”* * * Remove the short and press Enter * * * “,如果未出现则重复以上步骤直至出现为止。</li>
+<li>以上成功执行之后平板处于<code>fastboot</code>模式，会看到屏幕有Amazon的logo，此时执行命令<code>./fastboot-step.sh</code></li>
+<li>以上成功执行之后平板进入<code>recovery</code>，如果屏幕是暗的可以按两次开机键点亮屏幕</li>
+<li>将刷机用到的文件通过adb或者recovery的存储传入手机，adb命令<code>adb push 6300.zip /sdcard adb push Magisk-v18.0.zip /sdcard   adb push finalize.zip /sdcard</code></li>
+<li>通过recovery刷入6300.zip，三清之后开机，注意不要联网</li>
+<li>关机，按音量下键+开机键进入recovery，刷入Magisk-v18.0.zip、finalize.zip</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Armin</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://preferman.github.io/2020/05/21/firehd8%E5%88%B7%E6%9C%BA/">http://preferman.github.io/2020/05/21/firehd8%E5%88%B7%E6%9C%BA/</a></span>
+                    </p>
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/10/07/%E9%A9%AC%E6%A6%82%E7%AC%94%E8%AE%B0/">马概笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2020/05/20/ibatis%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">ibatis使用记录</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Armin | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
